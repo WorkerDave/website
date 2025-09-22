@@ -2,101 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anomaly Donation Page</title>
+  <title>Support & Donations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #1e1e2e; /* dark background */
-      color: #f5f5f5;
-      margin: 0;
-      padding: 0;
+      background: linear-gradient(135deg, #1e1e2f, #2b2b3c);
+      color: #f1f1f1;
+      text-align: center;
+      padding: 30px;
     }
-    .container {
-      width: 90%;
-      max-width: 800px;
-      margin: 30px auto;
-      background: #2a2a3d; /* darker panel */
-      border-radius: 10px;
+    h1 {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 30px;
+      color: #cccccc;
+    }
+    .tier, .download {
+      background: #2f2f40;
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
-    h1, h2 {
-      text-align: center;
+    .tier h2, .download h2 {
+      margin-top: 0;
+      color: #ffffff;
     }
-    .donation-option, .download-links {
-      border: 1px solid #444;
-      background: #3a3a4d;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 8px;
-      text-align: center;
+    .price {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #4da3ff;
     }
-    .donation-option button, .download-links a {
-      background: #4cafef;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
+    .donate-btn, .download-btn {
       display: inline-block;
-      font-size: 16px;
+      margin: 10px;
+      padding: 12px 20px;
+      background: #0070ba;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-    .donation-option button:hover, .download-links a:hover {
-      background: #3a9ad9;
+    .donate-btn:hover, .download-btn:hover {
+      background: #005c94;
+    }
+    .logo {
+      width: 160px;
+      height: auto;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Anomaly Download & Donation Page</h1>
+  <!-- Logo -->
+  <img src="logo.png" alt="Anomaly Realms Logo" class="logo">
 
-    <!-- Download buttons -->
-    <div class="download-links">
-      <h2>Download Game</h2>
-      <a href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar">📥 Download RAR</a>
-      <a href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">📥 Download ZIP</a>
-    </div>
+  <!-- Download Section -->
+  <div class="download">
+    <h2>Download Anomaly Realms</h2>
+    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar">📥 Download RAR</a>
+    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">📥 Download ZIP</a>
+  </div>
 
-    <h2>Support the Project</h2>
+  <h1>Support Anomaly Realms 💖</h1>
+  <p>Choose a tier below to support the game and unlock rewards!</p>
 
-    <div class="donation-option">
-      <h3>Premium Battlepass — $8</h3>
-      <p>Access to Premium Quests</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave/8')">Donate $8</button>
-    </div>
+  <!-- Premium Battlepass -->
+  <div class="tier">
+    <h2>Premium Battlepass</h2>
+    <p class="price">$8</p>
+    <p>Access to Premium Battlepass Quests</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&amount=8&currency_code=USD" 
+       target="_blank">Donate via PayPal</a>
+  </div>
 
-    <div class="donation-option">
-      <h3>Donor 1 — $10</h3>
-      <p>10% lb, /dsize, /glow, Party Size: 4, 600 Gold</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave/10')">Donate $10</button>
-    </div>
+  <!-- Donor 1 -->
+  <div class="tier">
+    <h2>Donor 1</h2>
+    <p class="price">$10</p>
+    <p>10% lb, /dsize, /glow<br>Party Size: 4<br>600 Gold</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&amount=10&currency_code=USD" 
+       target="_blank">Donate via PayPal</a>
+  </div>
 
-    <div class="donation-option">
-      <h3>Donor 2 — $25</h3>
-      <p>25% lb, /dmax, Party Size: 5, 1500 Gold</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave/25')">Donate $25</button>
-    </div>
+  <!-- Donor 2 -->
+  <div class="tier">
+    <h2>Donor 2</h2>
+    <p class="price">$25</p>
+    <p>25% lb, /dmax<br>Party Size: 5<br>1500 Gold</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&amount=25&currency_code=USD" 
+       target="_blank">Donate via PayPal</a>
+  </div>
 
-    <div class="donation-option">
-      <h3>Donor 3 — $50</h3>
-      <p>50% lb, 8 Resprite Items, Your own custom pet sprite, Party Size: 6, 3500 Gold</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave/50')">Donate $50</button>
-    </div>
+  <!-- Donor 3 -->
+  <div class="tier">
+    <h2>Donor 3</h2>
+    <p class="price">$50</p>
+    <p>50% lb<br>8 Resprite Items<br>Custom pet sprite<br>Party Size: 6<br>3500 Gold</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&amount=50&currency_code=USD" 
+       target="_blank">Donate via PayPal</a>
+  </div>
 
-    <div class="donation-option">
-      <h3>Donor 4 — $75</h3>
-      <p>75% lb, /dgive, /dspawn (vault only), /dgod (vault only), /legendary, Party Size: 7, 5000 Gold (Trading Disabled)</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave/75')">Donate $75</button>
-    </div>
+  <!-- Donor 4 -->
+  <div class="tier">
+    <h2>Donor 4</h2>
+    <p class="price">$75</p>
+    <p>75% lb, /dgive, /dspawn (vault only), /dgod (vault only), /legendary<br>
+    Party Size: 7<br>5000 Gold (Trading Disabled)</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&amount=75&currency_code=USD" 
+       target="_blank">Donate via PayPal</a>
+  </div>
 
-    <div class="donation-option">
-      <h3>Gold — $1 = 100 Gold</h3>
-      <p>Buy as much as you want!</p>
-      <button onclick="window.open('https://www.paypal.com/paypalme/WorkerDave')">Buy Gold</button>
-    </div>
+  <!-- Gold Option -->
+  <div class="tier">
+    <h2>Gold Purchase</h2>
+    <p class="price">$1 = 100 Gold</p>
+    <p>You can buy as much as you want!</p>
+    <a class="donate-btn" 
+       href="https://www.paypal.com/donate?business=workerdaveinc@gmail.com&currency_code=USD" 
+       target="_blank">Choose Your Amount</a>
   </div>
 </body>
 </html>

@@ -10,7 +10,24 @@
       background: linear-gradient(135deg, #1e1e2f, #2b2b3c);
       color: #f1f1f1;
       text-align: center;
-      padding: 30px;
+      padding: 20px;
+      margin: 0;
+    }
+    .hero {
+      margin-bottom: 40px;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #4da3ff, #00ff88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #cccccc;
+      margin-bottom: 20px;
     }
     nav {
       margin-bottom: 20px;
@@ -70,42 +87,75 @@
       margin-bottom: 10px;
     }
     p {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       color: #cccccc;
     }
-    .tier, .anomaly, .fallen, .robonk, .marble {
-      background: #2f2f40;
-      border-radius: 12px;
-      padding: 30px;
-      margin: 20px auto;
-      max-width: 600px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      border: 1px solid #4da3ff;
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .tier h2, .anomaly h2, .fallen h2, .robonk h2, .marble h2 {
+    .game-card {
+      background: linear-gradient(145deg, #2f2f40, #3a3a4f);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      border: 1px solid rgba(77, 163, 255, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #4da3ff, #00ff88);
+    }
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(77, 163, 255, 0.3);
+    }
+    .game-card h2 {
       margin-top: 0;
       color: #ffffff;
-      font-size: 1.5em;
+      font-size: 1.4em;
       margin-bottom: 15px;
     }
-    .anomaly .logo, .fallen .logo, .robonk .logo, .marble .logo {
-      width: 200px;
+    .game-card .logo {
+      width: 120px;
       height: auto;
-      margin-bottom: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-    .download-section {
-      margin: 20px 0;
-      padding: 20px;
-      background: rgba(77, 163, 255, 0.1);
-      border-radius: 8px;
-      border: 1px solid rgba(77, 163, 255, 0.3);
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .download-section, .support-section {
+      margin: 15px 0;
+    }
+    .download-section h3, .support-section h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.1em;
+      color: #4da3ff;
     }
     .support-section {
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .support-section p {
+      margin: 0 0 15px 0;
+      font-size: 0.9em;
+      color: #aaaaaa;
     }
     .price {
       font-size: 1.2em;
@@ -114,17 +164,21 @@
     }
     .donate-btn, .download-btn {
       display: inline-block;
-      margin: 10px;
-      padding: 12px 20px;
-      background: #0070ba;
+      padding: 10px 18px;
+      background: linear-gradient(45deg, #0070ba, #0056b3);
       color: white;
-      border-radius: 8px;
+      border-radius: 25px;
       text-decoration: none;
       font-weight: bold;
-      transition: background 0.3s;
+      font-size: 0.9em;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 112, 186, 0.3);
     }
     .donate-btn:hover, .download-btn:hover {
-      background: #005c94;
+      background: linear-gradient(45deg, #005c94, #004080);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 112, 186, 0.4);
     }
     .logo {
       width: 160px;
@@ -152,65 +206,83 @@
     </ul>
   </nav>
 
-  <!-- Anomaly Section -->
-  <div class="anomaly">
-    <img src="anomaly.png" alt="Anomaly Realms Logo" class="logo">
-    <h2>Anomaly Realms</h2>   
-    <div class="download-section">
-      <h3>📥 Download Game</h3>
-      <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">Download ZIP</a>
-    </div>
-    <div class="support-section">
-      <h3>💖 Support Development</h3>
-      <p>Help keep Anomaly Realms growing with your support!</p>
-      <a class="download-btn" href="https://workerdave.github.io/website/support/anomaly.html">View Support Options</a>
-    </div>
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Game Development Hub</h1>
+    <p>Support indie game development and get exclusive rewards!</p>
   </div>
 
-  <!-- Fallen Reborn Section -->
-  <div class="fallen">
-    <img src="fallen.png" alt="Fallen Reborn Logo" class="logo">
-    <h2>Fallen Reborn</h2>   
-    <div class="download-section">
-      <h3>📥 Download Game</h3>
-      <!-- <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Fallen.rar">Download RAR</a>
-      <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Fallen.zip">Download ZIP</a> -->
+  <!-- Games Grid -->
+  <div class="games-grid">
+    
+    <!-- Anomaly Realms Card -->
+    <div class="game-card">
+      <img src="anomaly.png" alt="Anomaly Realms Logo" class="logo">
+      <h2>Anomaly Realms</h2>
+      <div class="download-section">
+        <h3>📥 Download Game</h3>
+        <div class="action-buttons">
+          <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">Download ZIP</a>
+        </div>
+      </div>
+      <div class="support-section">
+        <h3>💖 Support Development</h3>
+        <p>Help keep Anomaly Realms growing!</p>
+        <a class="download-btn" href="https://workerdave.github.io/website/support/anomaly.html">View Support Options</a>
+      </div>
     </div>
-    <div class="support-section">
-      <h3>💖 Support Development</h3>
-      <p>Help keep Fallen Reborn growing with your support!</p>
-      <a class="download-btn" href="https://workerdave.github.io/website/support/fallen.html">View Support Options</a>
-    </div>
-  </div>
 
-  <!-- Robonk Section -->
-  <div class="robonk">
-    <img src="robonk.png" alt="Robonk Logo" class="logo">
-    <h2>Robonk</h2>   
-    <div class="download-section">
-      <h3>Play Game</h3>
-      <a class="download-btn" href="https://www.roblox.com/games/128130633684020/RoBonk">Play Here At Roblox</a>
+    <!-- Fallen Reborn Card -->
+    <div class="game-card">
+      <img src="fallen.png" alt="Fallen Reborn Logo" class="logo">
+      <h2>Fallen Reborn</h2>
+      <div class="download-section">
+        <h3>📥 Download Game</h3>
+        <div class="action-buttons">
+          <p style="color: #888; font-size: 0.9em; margin: 0;">Coming Soon</p>
+        </div>
+      </div>
+      <div class="support-section">
+        <h3>💖 Support Development</h3>
+        <p>Help keep Fallen Reborn growing!</p>
+        <a class="download-btn" href="https://workerdave.github.io/website/support/fallen.html">View Support Options</a>
+      </div>
     </div>
-    <div class="support-section">
-      <h3>💖 Support Development</h3>
-      <p>Help keep Robonk growing with your support!</p>
-      <a class="download-btn" href="https://workerdave.github.io/website/support/robonk.html">View Support Options</a>
-    </div>
-  </div>
 
-  <!-- Marble Game Section -->
-  <div class="marble">
-    <img src="marble.png" alt="Marble Game Logo" class="logo">
-    <h2>Marble Game</h2>   
-    <div class="download-section">
-      <h3>📥 Join Discord</h3>
-      <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
+    <!-- Robonk Card -->
+    <div class="game-card">
+      <img src="robonk.png" alt="Robonk Logo" class="logo">
+      <h2>Robonk</h2>
+      <div class="download-section">
+        <h3>🎮 Play Game</h3>
+        <div class="action-buttons">
+          <a class="download-btn" href="https://www.roblox.com/games/128130633684020/RoBonk">Play on Roblox</a>
+        </div>
+      </div>
+      <div class="support-section">
+        <h3>💖 Support Development</h3>
+        <p>Help keep Robonk growing!</p>
+        <a class="download-btn" href="https://workerdave.github.io/website/support/robonk.html">View Support Options</a>
+      </div>
     </div>
-    <div class="support-section">
-      <h3>💖 Support Development</h3>
-      <p>Help keep Marble Game growing with your support!</p>
-      <a class="download-btn" href="https://workerdave.github.io/website/support/marble.html">View Support Options</a>
+
+    <!-- Marble Game Card -->
+    <div class="game-card">
+      <img src="marble.png" alt="Marble Game Logo" class="logo">
+      <h2>Marble Game</h2>
+      <div class="download-section">
+        <h3>💬 Join Community</h3>
+        <div class="action-buttons">
+          <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
+        </div>
+      </div>
+      <div class="support-section">
+        <h3>💖 Support Development</h3>
+        <p>Help keep Marble Game growing!</p>
+        <a class="download-btn" href="https://workerdave.github.io/website/support/marble.html">View Support Options</a>
+      </div>
     </div>
+
   </div>
 
 </body>

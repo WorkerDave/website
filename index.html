@@ -35,14 +35,36 @@
     .tier, .anomaly {
       background: #2f2f40;
       border-radius: 12px;
-      padding: 20px;
+      padding: 30px;
       margin: 20px auto;
-      max-width: 500px;
+      max-width: 600px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      border: 1px solid #4da3ff;
     }
     .tier h2, .anomaly h2 {
       margin-top: 0;
       color: #ffffff;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+    .anomaly .logo {
+      width: 200px;
+      height: auto;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .download-section {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(77, 163, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(77, 163, 255, 0.3);
+    }
+    .support-section {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
     .price {
       font-size: 1.2em;
@@ -82,18 +104,23 @@
     <a href="support/marble.html">Marble Game</a>
   </nav>
 
-  <!-- Logo -->
-
-  <!-- Download Section -->
+  <!-- Anomaly Section -->
   <div class="anomaly">
-  <img src="logo.png" alt="Anomaly Realms Logo" class="logo">
-    <h2>Download Anomaly Realms</h2>
-    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar">📥 Download RAR</a>
-    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">📥 Download ZIP</a>
-  <h2>Support Anomaly Realms 💖</h2>	
-    <a class="download-btn" href="https://workerdave.github.io/website/support/anomaly.html">💖 Donate</a>
+    <img src="logo.png" alt="Anomaly Realms Logo" class="logo">
+    <h2>Anomaly Realms</h2>
+    
+    <div class="download-section">
+      <h3>📥 Download Game</h3>
+      <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar">Download RAR</a>
+      <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">Download ZIP</a>
+    </div>
+    
+    <div class="support-section">
+      <h3>💖 Support Development</h3>
+      <p>Help keep Anomaly Realms growing with your support!</p>
+      <a class="download-btn" href="https://workerdave.github.io/website/support/anomaly.html">View Support Options</a>
+    </div>
   </div>
-  <!-- tiers continue unchanged -->
 
 </body>
 </html>

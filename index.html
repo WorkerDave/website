@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -46,7 +46,6 @@
       <!-- tv table with cartridges -->
       <div class="tv-table">
         <div class="table-top">
-          <div class="table-statue" title="Marble statue — Marble Game">🗿</div>
           <div class="cartridge" data-game="anomaly" onclick="insertCartridge(this)" tabindex="0">
             <img src="anomaly.png" alt="Anomaly Realms" class="cart-art">
             <div class="cart-label">ANOMALY REALMS</div>
@@ -61,11 +60,6 @@
             <img src="robonk.png" alt="Robonk" class="cart-art">
             <div class="cart-label">ROBONK</div>
             <div class="cart-ch">CH 03</div>
-          </div>
-          <div class="cartridge cart-random" onclick="insertRandom()" tabindex="0">
-            <div class="cart-art random-art">🎲</div>
-            <div class="cart-label">RANDOM</div>
-            <div class="cart-ch">SURPRISE ME</div>
           </div>
           <div class="cartridge" data-game="marble" onclick="insertCartridge(this)" tabindex="0">
             <img src="marble.png" alt="Marble Game" class="cart-art">
@@ -175,11 +169,6 @@
       setTimeout(() => screen.classList.remove('changing'), 250);
     }
 
-    function insertRandom() {
-      const keys = Object.keys(CHANNELS).filter(k => k !== currentGame);
-      const key = keys[Math.floor(Math.random() * keys.length)];
-      const cart = document.querySelector('.cartridge[data-game="' + key + '"]');
-      if (cart) insertCartridge(cart);
     }
 
     function insertCartridge(cart) {
@@ -202,8 +191,11 @@
       void ghost.offsetWidth;
       const dx = (sRect.left + sRect.width / 2) - (cRect.left + cRect.width / 2);
       const dy = (sRect.top + sRect.height / 2) - (cRect.top + cRect.height / 2);
-      ghost.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(0.18) rotate(3deg)';
-      ghost.style.opacity = '0.15';
+      // enlarge slightly, tilt flat in perspective, and slide into the slot
+      const fit = Math.min((sRect.width * 0.9) / cRect.width, 1.35);
+      ghost.style.transform =
+        'translate(' + dx + 'px,' + dy + 'px) perspective(700px) scale(' + fit + ') rotateX(62deg)';
+      ghost.style.opacity = '0';
 
       setTimeout(() => {
         ghost.remove();

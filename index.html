@@ -169,8 +169,6 @@
       setTimeout(() => screen.classList.remove('changing'), 250);
     }
 
-    }
-
     function insertCartridge(cart) {
       if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
       document.querySelectorAll('.cartridge.inserted').forEach(c => c.classList.remove('inserted'));

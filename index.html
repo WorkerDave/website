@@ -38,8 +38,6 @@
         </div>
         <div class="tv-panel">
           <div class="tv-slot" id="tvSlot">
-            <div class="slot-mouth"></div>
-            <div class="slot-feed"><div class="feed-card" id="feedCard"></div></div>
             <div class="slot-door"></div>
             <span>VCR</span>
           </div>
@@ -202,11 +200,11 @@
         { transform: `translate(${dx * 0.3}px, ${dy * 0.75 - 70}px) rotate(-9deg) scale(${fit * 0.85})`, opacity: 1, offset: 0.4, easing: 'cubic-bezier(.4,0,.8,.4)' },
         // 3. gravity drop toward the slot, beginning to tilt flat
         { transform: `translate(${dx * 0.92}px, ${dy * 0.95}px) rotate(4deg) perspective(700px) rotateX(45deg) scale(${fit})`, opacity: 1, offset: 0.72, easing: 'cubic-bezier(.5,0,.9,.5)' },
-        // 4. tilt fully flat and feed into the slot
-        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(72deg) scale(${fit})`, opacity: 0.9, offset: 0.9, easing: 'ease-in' },
-        // 5. slide the last bit inside and vanish
-        { transform: `translate(${dx + 14}px, ${dy}px) perspective(700px) rotateX(80deg) scale(${fit})`, opacity: 0, offset: 1 }
-      ], { duration: 1000, fill: 'forwards' });
+        // 4. tilt fully flat and line up with the slot — still visible
+        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(72deg) scale(${fit})`, opacity: 1, offset: 0.88, easing: 'ease-in' },
+        // 5. settle at the slot mouth
+        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(74deg) scale(${fit})`, opacity: 1, offset: 1 }
+      ], { duration: 900, fill: 'forwards' });
 
       // TV shakes a little on impact
       setTimeout(() => {
@@ -219,21 +217,19 @@
         ], { duration: 220 });
       }, 880);
 
-      // PHASE 2 — handoff: door flips open, card feeds through the slot DVD-style
+      // PHASE 2 — the card plunges into the slit: door opens, card flattens &
+      // compresses down into the dark opening until it's fully swallowed
       setTimeout(() => {
-        ghost.remove();
         slot.classList.add('open');
 
-        const feed = document.getElementById('feedCard');
-        feed.innerHTML = '<img src="' + CHANNELS[cart.dataset.game].art + '" alt="">';
-        feed.style.borderColor = getComputedStyle(cart).borderTopColor;
-        feed.animate([
-          // emerges already partway into the slot mouth, slides across, gets swallowed
-          { transform: 'translateX(-140%) rotate(-2deg) scale(0.95)', opacity: 1, offset: 0, easing: 'ease-in' },
-          { transform: 'translateX(-30%) rotate(1deg) scale(0.8)', opacity: 1, offset: 0.45 },
-          { transform: 'translateX(55%) rotate(0deg) scale(0.55)', opacity: 0.85, offset: 0.75 },
-          { transform: 'translateX(110%) rotate(0deg) scale(0.3)', opacity: 0, offset: 1 }
-        ], { duration: 650, fill: 'forwards' });
+        ghost.animate([
+          // at the mouth, lying flat against the slot
+          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(74deg) scale(${fit})`, opacity: 1, offset: 0, easing: 'ease-in' },
+          // tipping into the opening
+          { transform: `translate(${dx}px, ${dy + 6}px) perspective(700px) rotateX(86deg) scale(${fit * 0.55})`, opacity: 0.85, offset: 0.55 },
+          // swallowed — compressed into the slit line, gone
+          { transform: `translate(${dx}px, ${dy + 9}px) perspective(700px) rotateX(90deg) scale(${fit * 0.06})`, opacity: 0, offset: 1 }
+        ], { duration: 500, fill: 'forwards' });
 
         // TV shudders as the card is pulled in
         document.querySelector('.tv').animate([
@@ -242,11 +238,12 @@
           { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
           { transform: 'translate(1px,0) rotate(0.15deg)' },
           { transform: 'translate(0,0) rotate(0deg)' }
-        ], { duration: 220, delay: 200 });
+        ], { duration: 220, delay: 250 });
       }, 900);
 
       // PHASE 3 — door closes, channel changes
       setTimeout(() => {
+        ghost.remove();
         slot.classList.remove('open');
         slot.classList.add('loading');
         setTimeout(() => slot.classList.remove('loading'), 600);
@@ -255,7 +252,7 @@
         cart.classList.add('inserted');
 
         tuneTo(CHANNELS[cart.dataset.game], cart.dataset.game);
-      }, 1550);
+      }, 1500);
     }
 
     function toggleMenu() {

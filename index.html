@@ -205,10 +205,10 @@
         { transform: `translate(${dx * 0.3}px, ${dy * 0.75 - 70}px) rotate(-9deg) scale(${fit * 0.85})`, opacity: 1, offset: 0.4, easing: 'cubic-bezier(.4,0,.8,.4)' },
         // 3. gravity drop toward the slot, beginning to tilt flat
         { transform: `translate(${dx * 0.92}px, ${dy * 0.95}px) rotate(4deg) perspective(700px) rotateX(45deg) scale(${fit})`, opacity: 1, offset: 0.72, easing: 'cubic-bezier(.5,0,.9,.5)' },
-        // 4. tilt flat into edge-on view, slab thickness visible, lined up with slot
-        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(78deg) scale(${fit})`, opacity: 1, offset: 0.88, easing: 'ease-in' },
-        // 5. settle at the slot mouth, edge-on like a floppy about to go in
-        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(82deg) scale(${fit})`, opacity: 1, offset: 1 }
+        // 4. tilt to a believable angle — face AND 3D edge visible — and hover just above the slot
+        { transform: `translate(${dx}px, ${dy - 26}px) perspective(700px) rotateX(55deg) scale(${fit})`, opacity: 1, offset: 0.86, easing: 'ease-in' },
+        // 5. hover over the slot mouth like a hand holding a floppy
+        { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 1 }
       ], { duration: 900, fill: 'forwards' });
 
       // TV shakes a little on impact
@@ -222,25 +222,28 @@
         ], { duration: 220 });
       }, 880);
 
-      // PHASE 2 — the slab gets fed horizontally through the slot, DVD-style.
-      // The flying card fades exactly as the edge-on slab appears in the mouth.
+      // door flips open while the card is still approaching
+      setTimeout(() => slot.classList.add('open'), 650);
+
+      // PHASE 2 — the card drops flat onto the mouth and slides in, slab edge
+      // catching the light as it's swallowed
       setTimeout(() => {
-        slot.classList.add('open');
-
-        // flying card melts into the mouth
+        // drop: card tips down onto the slot opening
         ghost.animate([
-          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(82deg) scale(${fit})`, opacity: 1, offset: 0 },
-          { transform: `translate(${dx}px, ${dy + 3}px) perspective(700px) rotateX(88deg) scale(${fit})`, opacity: 0, offset: 1 }
-        ], { duration: 180, fill: 'forwards' });
+          { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 0, easing: 'ease-in' },
+          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(86deg) scale(${fit})`, opacity: 0.9, offset: 0.6 },
+          // slide the last bit into the mouth and vanish
+          { transform: `translate(${dx + 24}px, ${dy + 4}px) perspective(700px) rotateX(90deg) scale(${fit * 0.9})`, opacity: 0, offset: 1 }
+        ], { duration: 420, fill: 'forwards' });
 
-        // edge-on slab slides through the slot and gets swallowed
+        // edge-on slab slides through the slot as the card disappears into it
         const feed = document.getElementById('feedCard');
-        const feedAnim = feed.animate([
-          { transform: 'translateX(-140%)', opacity: 1, offset: 0, easing: 'cubic-bezier(.3,0,.7,.6)' },
-          { transform: 'translateX(-40%)', opacity: 1, offset: 0.45 },
+        feed.animate([
+          { transform: 'translateX(-120%)', opacity: 1, offset: 0, easing: 'cubic-bezier(.3,0,.7,.6)' },
+          { transform: 'translateX(-30%)', opacity: 1, offset: 0.45 },
           { transform: 'translateX(40%) scaleX(0.75)', opacity: 1, offset: 0.75, easing: 'ease-in' },
           { transform: 'translateX(95%) scaleX(0.3)', opacity: 0, offset: 1 }
-        ], { duration: 700, fill: 'forwards' });
+        ], { duration: 650, fill: 'forwards', delay: 180 });
 
         // TV shudders as the card is pulled in
         document.querySelector('.tv').animate([
@@ -249,8 +252,8 @@
           { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
           { transform: 'translate(1px,0) rotate(0.15deg)' },
           { transform: 'translate(0,0) rotate(0deg)' }
-        ], { duration: 220, delay: 300 });
-      }, 900);
+        ], { duration: 220, delay: 450 });
+      }, 950);
 
       // PHASE 3 — door closes, channel changes
       setTimeout(() => {
@@ -263,7 +266,7 @@
         cart.classList.add('inserted');
 
         tuneTo(CHANNELS[cart.dataset.game], cart.dataset.game);
-      }, 1500);
+      }, 1750);
     }
 
     function toggleMenu() {

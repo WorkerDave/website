@@ -193,6 +193,9 @@
       const dx = (sRect.left + sRect.width / 2) - (cRect.left + cRect.width / 2);
       const dy = (sRect.top + sRect.height / 2) - (cRect.top + cRect.height / 2);
       const fit = Math.min((sRect.width * 0.95) / cRect.width, 1.6);
+      const cardH = cRect.height * fit;
+      // hover position: card's bottom edge sits right on the slot's opening
+      const hoverY = (sRect.top - cardH / 2) - (cRect.top + cRect.height / 2);
       const anim = ghost.animate([
         // 1. get picked up off the table, growing
         { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0, easing: 'cubic-bezier(.2,.8,.3,1)' },
@@ -200,10 +203,10 @@
         { transform: `translate(${dx * 0.3}px, ${dy * 0.75 - 70}px) rotate(-9deg) scale(${fit * 0.85})`, opacity: 1, offset: 0.4, easing: 'cubic-bezier(.4,0,.8,.4)' },
         // 3. gravity drop toward the slot, beginning to tilt flat
         { transform: `translate(${dx * 0.92}px, ${dy * 0.95}px) rotate(4deg) perspective(700px) rotateX(45deg) scale(${fit})`, opacity: 1, offset: 0.72, easing: 'cubic-bezier(.5,0,.9,.5)' },
-        // 4. tilt fully flat and line up with the slot — still visible
-        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(72deg) scale(${fit})`, opacity: 1, offset: 0.88, easing: 'ease-in' },
-        // 5. settle at the slot mouth
-        { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(74deg) scale(${fit})`, opacity: 1, offset: 1 }
+        // 4. tilt upright and rise to hover just above the slot, bottom edge on the mouth
+        { transform: `translate(${dx}px, ${hoverY}px) perspective(700px) rotateX(28deg) scale(${fit})`, opacity: 1, offset: 0.88, easing: 'ease-in' },
+        // 5. settle hovering over the slot, ready to be fed in
+        { transform: `translate(${dx}px, ${hoverY}px) perspective(700px) rotateX(16deg) scale(${fit})`, opacity: 1, offset: 1 }
       ], { duration: 900, fill: 'forwards' });
 
       // TV shakes a little on impact
@@ -217,19 +220,21 @@
         ], { duration: 220 });
       }, 880);
 
-      // PHASE 2 — the card plunges into the slit: door opens, card flattens &
-      // compresses down into the dark opening until it's fully swallowed
+      // PHASE 2 — the card feeds DOWN into the slit: door opens, card descends
+      // while clip-path swallows everything below the slot line
       setTimeout(() => {
         slot.classList.add('open');
 
         ghost.animate([
-          // at the mouth, lying flat against the slot
-          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(74deg) scale(${fit})`, opacity: 1, offset: 0, easing: 'ease-in' },
-          // tipping into the opening
-          { transform: `translate(${dx}px, ${dy + 6}px) perspective(700px) rotateX(86deg) scale(${fit * 0.55})`, opacity: 0.85, offset: 0.55 },
-          // swallowed — compressed into the slit line, gone
-          { transform: `translate(${dx}px, ${dy + 9}px) perspective(700px) rotateX(90deg) scale(${fit * 0.06})`, opacity: 0, offset: 1 }
-        ], { duration: 500, fill: 'forwards' });
+          // hovering above the open slot
+          { transform: `translate(${dx}px, ${hoverY}px) perspective(700px) rotateX(16deg) scale(${fit})`, clipPath: 'inset(0 0 0 0)', opacity: 1, offset: 0, easing: 'ease-in' },
+          // sliding down into the slit — bottom disappearing behind the slot line
+          { transform: `translate(${dx}px, ${hoverY + cardH * 0.5}px) perspective(700px) rotateX(6deg) scale(${fit})`, clipPath: `inset(0 0 48% 0)`, opacity: 1, offset: 0.5 },
+          // most of the way in
+          { transform: `translate(${dx}px, ${hoverY + cardH * 0.85}px) scale(${fit})`, clipPath: `inset(0 0 88% 0)`, opacity: 0.9, offset: 0.88 },
+          // fully swallowed
+          { transform: `translate(${dx}px, ${hoverY + cardH}px) scale(${fit})`, clipPath: `inset(0 0 100% 0)`, opacity: 0, offset: 1 }
+        ], { duration: 600, fill: 'forwards' });
 
         // TV shudders as the card is pulled in
         document.querySelector('.tv').animate([

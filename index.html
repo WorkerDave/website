@@ -25,21 +25,6 @@
   <!-- The Room -->
   <section class="room">
 
-    <!-- wall decor -->
-    <div class="wall">
-      <div class="poster">
-        <div class="poster-title">ANOMALOUS<br>GAMES</div>
-        <div class="poster-sub">est. 2025</div>
-      </div>
-      <div class="wall-lamp"></div>
-      <div class="shelf">
-        <span class="shelf-item" title="Marble statue — Marble Game">🗿</span>
-        <span class="shelf-item" title="Fallen candle — Fallen Reborn">🕯️</span>
-        <span class="shelf-item" title="Robo buddy — Robonk">🤖</span>
-        <span class="shelf-item" title="Anomaly relic — Anomaly Realms">⛏️</span>
-      </div>
-    </div>
-
     <!-- TV setup -->
     <div class="tv-set">
       <div class="tv">
@@ -66,6 +51,7 @@
       <!-- tv table with cartridges -->
       <div class="tv-table">
         <div class="table-top">
+          <div class="table-statue" title="Marble statue — Marble Game">🗿</div>
           <div class="cartridge" data-game="anomaly" onclick="insertCartridge(this)" tabindex="0">
             <img src="anomaly.png" alt="Anomaly Realms" class="cart-art">
             <div class="cart-label">ANOMALY REALMS</div>
@@ -140,9 +126,33 @@
       if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
       document.querySelectorAll('.cartridge.inserted').forEach(c => c.classList.remove('inserted'));
       cart.classList.add('inserting');
+
+      // clone the cartridge and fly it into the actual VCR slot
+      const slot = document.getElementById('tvSlot');
+      const cRect = cart.getBoundingClientRect();
+      const sRect = slot.getBoundingClientRect();
+      const ghost = cart.cloneNode(true);
+      ghost.className = 'cartridge cart-ghost';
+      ghost.style.left = cRect.left + 'px';
+      ghost.style.top = cRect.top + 'px';
+      ghost.style.width = cRect.width + 'px';
+      document.body.appendChild(ghost);
+
+      // force reflow so the starting position sticks before transitioning
+      void ghost.offsetWidth;
+      const dx = (sRect.left + sRect.width / 2) - (cRect.left + cRect.width / 2);
+      const dy = (sRect.top + sRect.height / 2) - (cRect.top + cRect.height / 2);
+      ghost.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(0.18) rotate(3deg)';
+      ghost.style.opacity = '0.15';
+
       setTimeout(() => {
+        ghost.remove();
         cart.classList.remove('inserting');
         cart.classList.add('inserted');
+        // brief green blink on the slot
+        slot.classList.add('loading');
+        setTimeout(() => slot.classList.remove('loading'), 600);
+
         const game = CHANNELS[cart.dataset.game];
         const screen = document.getElementById('tvScreen');
         screen.classList.add('changing');
@@ -157,7 +167,7 @@
             '</div>';
           screen.classList.remove('changing');
         }, 250);
-      }, 700);
+      }, 750);
     }
 
     function toggleMenu() {

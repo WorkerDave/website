@@ -13,70 +13,19 @@
   padding: 40px 20px 60px;
 }
 
-/* ---------- Wall ---------- */
-.wall {
-  position: relative;
-  height: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6%;
-}
-
-.poster {
-  background: linear-gradient(160deg, #2a2333, #1d1826);
-  border: 2px solid rgba(77, 140, 255, 0.25);
-  border-radius: 6px;
-  padding: 14px 20px;
-  text-align: center;
-  transform: rotate(-2deg);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-}
-
-.poster-title {
-  font-weight: 800;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, #4da3ff, #43e97b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.15;
-}
-
-.poster-sub {
-  color: #6a6480;
-  font-size: 0.7em;
-  letter-spacing: 3px;
-  margin-top: 4px;
-}
-
-.wall-lamp {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #ffcf7a;
-  box-shadow: 0 0 40px 18px rgba(255, 200, 110, 0.18), 0 0 90px 40px rgba(255, 200, 110, 0.08);
-}
-
-.shelf {
-  display: flex;
-  gap: 22px;
-  background: linear-gradient(180deg, #3a2c1c, #2b2115);
-  padding: 8px 18px 6px;
-  border-radius: 6px;
-  border-bottom: 3px solid #4a3823;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
-  transform: rotate(1deg);
-}
-
-.shelf-item {
-  font-size: 1.5em;
-  filter: brightness(0.85);
-  transition: filter 0.3s, transform 0.3s;
+/* ---------- Table statue ---------- */
+.table-statue {
+  align-self: center;
+  font-size: 1.7em;
+  filter: brightness(0.8) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
   cursor: default;
+  transition: filter 0.3s, transform 0.3s;
 }
 
-.shelf-item:hover { filter: brightness(1.15); transform: translateY(-3px); }
+.table-statue:hover {
+  filter: brightness(1.1);
+  transform: translateY(-3px);
+}
 
 /* ---------- TV ---------- */
 .tv-set {
@@ -338,18 +287,22 @@
   padding-top: 5px;
 }
 
-/* insert animation — flies up to the TV slot */
-.cartridge.inserting {
-  animation: insertInto 0.7s ease-in forwards;
+/* ghost clone that flies from table into the VCR slot */
+.cartridge.inserting { opacity: 0.35; }
+
+.cartridge.cart-ghost {
+  position: fixed;
+  z-index: 999;
   pointer-events: none;
-  z-index: 5;
+  margin: 0;
+  transition: transform 0.75s cubic-bezier(0.5, 0, 0.8, 0.4), opacity 0.75s ease-in;
+  will-change: transform, opacity;
 }
 
-@keyframes insertInto {
-  0%   { transform: translateY(0) scale(1); opacity: 1; }
-  45%  { transform: translateY(-220px) scale(0.6) rotate(2deg); opacity: 0.9; }
-  70%  { transform: translateY(-250px) scale(0.45); opacity: 0.6; }
-  100% { transform: translateY(-260px) scale(0.3); opacity: 0; }
+/* green blink on the slot as the cartridge "loads" */
+.tv-slot.loading {
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(127, 212, 138, 0.6);
+  border-color: rgba(127, 212, 138, 0.6);
 }
 
 /* after inserting: dimmed, shows as "in the TV" */
@@ -385,7 +338,7 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
-  .wall { height: auto; flex-direction: column; gap: 18px; }
+  .room { padding: 20px 12px 40px; }
   .screen-title { font-size: 1.15em; }
   .screen-desc { font-size: 0.75em; }
   .screen-logo { height: 46px; }

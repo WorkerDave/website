@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Anomalous Games - WorkerDave & nekoT</title>
+  <title>Anomalous Games — The Room</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="room.css">
 </head>
-<body>
+<body class="room-body">
 
   <!-- Navigation -->
   <nav class="nav">
@@ -15,120 +16,82 @@
       <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="support/anomaly.html">Anomaly Realms</a></li>
         <li><a href="support/donate.html">Donate</a></li>
         <li><a href="developers.html">Developers</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-badge">Independent Game Development Team</div>
-    <h1><span class="grad">Welcome to Anomalous Games</span></h1>
-    <p>A two-person studio led by WorkerDave & nekoT — download Anomaly Realms, explore upcoming titles, and support our development!</p>
-    <div class="hero-buttons">
-      <a href="#games" class="btn btn-primary">🎮 View Games</a>
-      <a href="support/anomaly.html" class="btn btn-secondary">💖 Support Development</a>
-    </div>
-  </section>
+  <!-- The Room -->
+  <section class="room">
 
-  <!-- Games Section -->
-  <section class="games-section" id="games">
-    <div class="section-header">
-      <h2>Our Games</h2>
-      <p>Explore our collection of indie games — from released titles to works in progress</p>
-    </div>
-
-    <div class="games-grid">
-
-      <!-- Anomaly Realms Card -->
-      <div class="game-card anomaly">
-        <div class="card-content">
-          <img src="anomaly.png" alt="Anomaly Realms Logo" class="card-logo">
-          <h2 class="card-title">Anomaly Realms</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-available">✅ Available Now</span>
-          <div class="card-actions">
-            <a href="support/anomaly.html" class="card-btn primary">📥 Download & Play</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline">💬 Join Discord</a>
-            <a href="support/anomaly.html" class="card-btn outline small">💖 Support</a>
-          </div>
-        </div>
+    <!-- wall decor -->
+    <div class="wall">
+      <div class="poster">
+        <div class="poster-title">ANOMALOUS<br>GAMES</div>
+        <div class="poster-sub">est. 2025</div>
       </div>
-
-      <!-- Fallen Reborn Card -->
-      <div class="game-card fallen">
-        <div class="card-content">
-          <img src="fallen.png" alt="Fallen Reborn Logo" class="card-logo">
-          <h2 class="card-title">Fallen Reborn</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/fallen.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Robonk Card -->
-      <div class="game-card robonk">
-        <div class="card-content">
-          <img src="robonk.png" alt="Robonk Logo" class="card-logo">
-          <h2 class="card-title">Robonk</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/robonk.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Marble Game Card -->
-      <div class="game-card marble">
-        <div class="card-content">
-          <img src="marble.png" alt="Marble Game Logo" class="card-logo">
-          <h2 class="card-title">Marble Game</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/marble.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="features">
-    <div class="features-container">
-      <div class="feature">
-        <div class="feature-icon">🎮</div>
-        <h3>Playable Games</h3>
-        <p>Download and play Anomaly Realms right now. More games coming soon!</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💬</div>
-        <h3>Community</h3>
-        <p>Join our Discord community to chat, get updates, and connect with other players.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💖</div>
-        <h3>Support Us</h3>
-        <p>Support development through PayPal donations and unlock exclusive rewards.</p>
+      <div class="wall-lamp"></div>
+      <div class="shelf">
+        <span class="shelf-item" title="Marble statue — Marble Game">🗿</span>
+        <span class="shelf-item" title="Fallen candle — Fallen Reborn">🕯️</span>
+        <span class="shelf-item" title="Robo buddy — Robonk">🤖</span>
+        <span class="shelf-item" title="Anomaly relic — Anomaly Realms">⛏️</span>
       </div>
     </div>
-  </section>
 
-  <!-- CTA Section -->
-  <section class="cta">
-    <h2>Love Our Games?</h2>
-    <p>Every donation helps us create more content and bring new games to life faster.</p>
-    <a href="support/anomaly.html" class="btn btn-primary">💖 Support Anomaly Realms</a>
-  </section>
+    <!-- TV setup -->
+    <div class="tv-set">
+      <div class="tv">
+        <div class="tv-screen" id="tvScreen">
+          <div class="scanlines"></div>
+          <div class="screen-content" id="screenContent">
+            <img src="anomaly.png" alt="" class="screen-logo">
+            <div class="screen-ch">CH 01</div>
+            <h2 class="screen-title">Anomaly Realms</h2>
+            <p class="screen-desc">Minecraft-inspired RPG with real-time combat, crafting, and endless exploration.</p>
+            <div class="screen-links">
+              <a href="support/anomaly.html" class="screen-btn">📥 Download &amp; Play</a>
+              <a href="support/anomaly.html" class="screen-btn alt">💖 Support</a>
+            </div>
+          </div>
+        </div>
+        <div class="tv-panel">
+          <div class="tv-slot" id="tvSlot"><span>VCR</span></div>
+          <div class="tv-knobs"><span></span><span></span></div>
+          <div class="tv-brand">ANOMALOUS&nbsp;TV</div>
+        </div>
+        <div class="tv-legs"><span></span><span></span></div>
+      </div>
+      <!-- tv table with cartridges -->
+      <div class="tv-table">
+        <div class="table-top">
+          <div class="cartridge" data-game="anomaly" onclick="insertCartridge(this)" tabindex="0">
+            <img src="anomaly.png" alt="Anomaly Realms" class="cart-art">
+            <div class="cart-label">ANOMALY REALMS</div>
+            <div class="cart-ch">CH 01</div>
+          </div>
+          <div class="cartridge" data-game="fallen" onclick="insertCartridge(this)" tabindex="0">
+            <img src="fallen.png" alt="Fallen Reborn" class="cart-art">
+            <div class="cart-label">FALLEN REBORN</div>
+            <div class="cart-ch">CH 02</div>
+          </div>
+          <div class="cartridge" data-game="robonk" onclick="insertCartridge(this)" tabindex="0">
+            <img src="robonk.png" alt="Robonk" class="cart-art">
+            <div class="cart-label">ROBONK</div>
+            <div class="cart-ch">CH 03</div>
+          </div>
+          <div class="cartridge" data-game="marble" onclick="insertCartridge(this)" tabindex="0">
+            <img src="marble.png" alt="Marble Game" class="cart-art">
+            <div class="cart-label">MARBLE GAME</div>
+            <div class="cart-ch">CH 04</div>
+          </div>
+        </div>
+        <div class="table-legs"><span></span><span></span></div>
+      </div>
+    </div>
+
+    <p class="room-hint">💡 Click a cartridge to insert it into the TV</p>
 
   <!-- Footer -->
   <footer class="footer">
@@ -143,15 +106,64 @@
       <a href="support/donate.html">Donate</a>
       <a href="developers.html">Developers</a>
     </div>
-    <p>&copy; 2025 Anomalous Games — WorkerDave & nekoT. All rights reserved.</p>
+    <p>&copy; 2025 Anomalous Games — WorkerDave &amp; nekoT. All rights reserved.</p>
   </footer>
 
   <script>
+    const CHANNELS = {
+      anomaly: {
+        ch: "CH 01", title: "Anomaly Realms", art: "anomaly.png",
+        desc: "Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.",
+        links: [
+          { href: "support/anomaly.html", label: "📥 Download & Play", cls: "" },
+          { href: "support/anomaly.html", label: "💖 Support", cls: "alt" }
+        ]
+      },
+      fallen: {
+        ch: "CH 02", title: "Fallen Reborn", art: "fallen.png",
+        desc: "A dark fantasy world where fallen heroes rise again. Immersive storytelling meets strategic gameplay in this epic adventure.",
+        links: [{ href: "support/fallen.html", label: "🔔 Get Notified", cls: "" }]
+      },
+      robonk: {
+        ch: "CH 03", title: "Robonk", art: "robonk.png",
+        desc: "Chaotic multiplayer mayhem with robots. WIP — stay tuned for playtests and updates.",
+        links: [{ href: "support/robonk.html", label: "🔔 Get Notified", cls: "" }]
+      },
+      marble: {
+        ch: "CH 04", title: "Marble Game", art: "marble.png",
+        desc: "Precision platforming meets beautiful marble physics. Navigate marble runs and collect gems in this relaxing yet challenging experience.",
+        links: [{ href: "support/marble.html", label: "🔔 Get Notified", cls: "" }]
+      }
+    };
+
+    function insertCartridge(cart) {
+      if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
+      document.querySelectorAll('.cartridge.inserted').forEach(c => c.classList.remove('inserted'));
+      cart.classList.add('inserting');
+      setTimeout(() => {
+        cart.classList.remove('inserting');
+        cart.classList.add('inserted');
+        const game = CHANNELS[cart.dataset.game];
+        const screen = document.getElementById('tvScreen');
+        screen.classList.add('changing');
+        setTimeout(() => {
+          document.getElementById('screenContent').innerHTML =
+            '<img src="' + game.art + '" alt="" class="screen-logo">' +
+            '<div class="screen-ch">' + game.ch + '</div>' +
+            '<h2 class="screen-title">' + game.title + '</h2>' +
+            '<p class="screen-desc">' + game.desc + '</p>' +
+            '<div class="screen-links">' +
+            game.links.map(l => '<a href="' + l.href + '" class="screen-btn ' + l.cls + '">' + l.label + '</a>').join('') +
+            '</div>';
+          screen.classList.remove('changing');
+        }, 250);
+      }, 700);
+    }
+
     function toggleMenu() {
-      const navLinks = document.getElementById('navLinks');
-      navLinks.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
     }
   </script>
-
+  </section>
 </body>
 </html>

@@ -1,0 +1,394 @@
+/* ===== THE ROOM — retro TV hub (retro-room branch) ===== */
+
+.room-body {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 38%, rgba(77, 140, 255, 0.10), transparent 65%),
+    linear-gradient(180deg, #17141f 0%, #12101a 55%, #1a1520 78%, #241c14 78.5%, #1b150e 100%);
+  min-height: 100vh;
+}
+
+.room {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+/* ---------- Wall ---------- */
+.wall {
+  position: relative;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+}
+
+.poster {
+  background: linear-gradient(160deg, #2a2333, #1d1826);
+  border: 2px solid rgba(77, 140, 255, 0.25);
+  border-radius: 6px;
+  padding: 14px 20px;
+  text-align: center;
+  transform: rotate(-2deg);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.poster-title {
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #4da3ff, #43e97b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.15;
+}
+
+.poster-sub {
+  color: #6a6480;
+  font-size: 0.7em;
+  letter-spacing: 3px;
+  margin-top: 4px;
+}
+
+.wall-lamp {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffcf7a;
+  box-shadow: 0 0 40px 18px rgba(255, 200, 110, 0.18), 0 0 90px 40px rgba(255, 200, 110, 0.08);
+}
+
+.shelf {
+  display: flex;
+  gap: 22px;
+  background: linear-gradient(180deg, #3a2c1c, #2b2115);
+  padding: 8px 18px 6px;
+  border-radius: 6px;
+  border-bottom: 3px solid #4a3823;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
+  transform: rotate(1deg);
+}
+
+.shelf-item {
+  font-size: 1.5em;
+  filter: brightness(0.85);
+  transition: filter 0.3s, transform 0.3s;
+  cursor: default;
+}
+
+.shelf-item:hover { filter: brightness(1.15); transform: translateY(-3px); }
+
+/* ---------- TV ---------- */
+.tv-set {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tv {
+  position: relative;
+  width: min(640px, 92vw);
+  background: linear-gradient(160deg, #3d3a45, #26242e 60%, #1c1a23);
+  border-radius: 22px;
+  padding: 22px 22px 14px;
+  box-shadow:
+    0 0 60px rgba(77, 140, 255, 0.12),
+    0 24px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.tv-screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px / 18px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #101826, #05070c 80%);
+  border: 6px solid #0d0c12;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.4s;
+}
+
+.tv-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+}
+
+.tv-screen.changing .screen-content { animation: channelFlicker 0.25s steps(3); }
+@keyframes channelFlicker {
+  0% { opacity: 0; filter: brightness(3) blur(2px); }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; filter: none; }
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.screen-content {
+  text-align: center;
+  padding: 22px;
+  color: #dfe6ff;
+  max-width: 100%;
+}
+
+.screen-logo {
+  height: 64px;
+  max-width: 55%;
+  object-fit: contain;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 12px rgba(77, 163, 255, 0.5));
+}
+
+.screen-ch {
+  display: inline-block;
+  font-size: 0.7em;
+  letter-spacing: 3px;
+  color: #7fd48a;
+  border: 1px solid rgba(127, 212, 138, 0.4);
+  border-radius: 4px;
+  padding: 2px 10px;
+  margin-bottom: 10px;
+  font-family: monospace;
+}
+
+.screen-title {
+  font-size: 1.5em;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.screen-desc {
+  font-size: 0.85em;
+  color: #9fb2d8;
+  line-height: 1.5;
+  margin: 0 auto 16px;
+  max-width: 40ch;
+}
+
+.screen-links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.screen-btn {
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #4da3ff, #2c6fdb);
+  box-shadow: 0 4px 14px rgba(77, 163, 255, 0.35);
+  transition: transform 0.2s;
+}
+
+.screen-btn:hover { transform: translateY(-2px); }
+
+.screen-btn.alt {
+  background: transparent;
+  border: 1px solid rgba(221, 229, 255, 0.35);
+  box-shadow: none;
+}
+
+/* TV control panel */
+.tv-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.tv-slot {
+  flex: 1;
+  height: 22px;
+  background: linear-gradient(180deg, #0a0910, #16141d);
+  border-radius: 5px;
+  border: 1px solid #0a0910;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.tv-slot span {
+  font-size: 0.55em;
+  letter-spacing: 3px;
+  color: #565064;
+}
+
+.tv-knobs { display: flex; gap: 10px; }
+
+.tv-knobs span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #5b5568, #232028);
+  border: 1px solid #14121a;
+}
+
+.tv-brand {
+  font-size: 0.6em;
+  letter-spacing: 3px;
+  color: #565064;
+}
+
+.tv-legs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 60px;
+}
+
+.tv-legs span {
+  width: 18px;
+  height: 26px;
+  background: linear-gradient(180deg, #1c1a23, #2b2833);
+  border-radius: 0 0 4px 4px;
+}
+/* ---------- TV Table & Cartridges ---------- */
+.tv-table {
+  width: min(760px, 94vw);
+  margin-top: 4px;
+}
+
+.table-top {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: linear-gradient(180deg, #4a3823, #38291a);
+  border-radius: 10px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.table-legs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 70px;
+}
+
+.table-legs span {
+  width: 22px;
+  height: 34px;
+  background: linear-gradient(180deg, #38291a, #241a10);
+  border-radius: 0 0 5px 5px;
+}
+
+/* Inscryption-style cartridge cards */
+.cartridge {
+  width: 128px;
+  padding: 10px 10px 12px;
+  background: linear-gradient(170deg, #2b2436, #1b1624);
+  border: 2px solid #4a3d5e;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.cartridge:hover, .cartridge:focus-visible {
+  transform: translateY(-8px) scale(1.04);
+  border-color: #7a63a8;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(122, 99, 168, 0.35);
+}
+
+.cart-art {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: radial-gradient(circle at 50% 40%, #332a44, #191425);
+  border: 1px solid #463a5c;
+  padding: 6px;
+}
+
+.cart-label {
+  margin-top: 8px;
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #cdbfe8;
+  line-height: 1.3;
+}
+
+.cart-ch {
+  margin-top: 5px;
+  font-family: monospace;
+  font-size: 0.58em;
+  letter-spacing: 2px;
+  color: #6a5d85;
+  border-top: 1px solid #3a3050;
+  padding-top: 5px;
+}
+
+/* insert animation — flies up to the TV slot */
+.cartridge.inserting {
+  animation: insertInto 0.7s ease-in forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes insertInto {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  45%  { transform: translateY(-220px) scale(0.6) rotate(2deg); opacity: 0.9; }
+  70%  { transform: translateY(-250px) scale(0.45); opacity: 0.6; }
+  100% { transform: translateY(-260px) scale(0.3); opacity: 0; }
+}
+
+/* after inserting: dimmed, shows as "in the TV" */
+.cartridge.inserted {
+  opacity: 0.45;
+  border-color: rgba(127, 212, 138, 0.55);
+  transform: scale(0.96);
+  cursor: default;
+}
+
+.cartridge.inserted::after {
+  content: "▶ PLAYING";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f3a26;
+  border: 1px solid rgba(127, 212, 138, 0.5);
+  color: #7fd48a;
+  font-size: 0.5em;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.room-hint {
+  text-align: center;
+  color: #6a6480;
+  font-size: 0.85em;
+  margin-top: 26px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+  .wall { height: auto; flex-direction: column; gap: 18px; }
+  .screen-title { font-size: 1.15em; }
+  .screen-desc { font-size: 0.75em; }
+  .screen-logo { height: 46px; }
+  .table-top { gap: 10px; padding: 14px 10px 12px; }
+  .cartridge { width: calc(50% - 10px); }
+}

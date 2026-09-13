@@ -224,13 +224,15 @@
         slot.classList.add('open');
 
         const feed = document.getElementById('feedCard');
+        feed.innerHTML = '<img src="' + CHANNELS[cart.dataset.game].art + '" alt="">';
         feed.style.borderColor = getComputedStyle(cart).borderTopColor;
         feed.animate([
-          { transform: 'translateX(-170%) scaleX(1)', opacity: 1, offset: 0, easing: 'ease-in' },
-          { transform: 'translateX(20%) scaleX(0.85)', opacity: 1, offset: 0.55 },
-          { transform: 'translateX(75%) scaleX(0.35)', opacity: 0.6, offset: 0.85 },
-          { transform: 'translateX(95%) scaleX(0.15)', opacity: 0, offset: 1 }
-        ], { duration: 600, fill: 'forwards' });
+          // emerges already partway into the slot mouth, slides across, gets swallowed
+          { transform: 'translateX(-140%) rotate(-2deg) scale(0.95)', opacity: 1, offset: 0, easing: 'ease-in' },
+          { transform: 'translateX(-30%) rotate(1deg) scale(0.8)', opacity: 1, offset: 0.45 },
+          { transform: 'translateX(55%) rotate(0deg) scale(0.55)', opacity: 0.85, offset: 0.75 },
+          { transform: 'translateX(110%) rotate(0deg) scale(0.3)', opacity: 0, offset: 1 }
+        ], { duration: 650, fill: 'forwards' });
 
         // TV shudders as the card is pulled in
         document.querySelector('.tv').animate([

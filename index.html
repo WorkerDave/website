@@ -31,17 +31,10 @@
     <div class="tv-set">
       <div class="tv">
         <div class="tv-screen" id="tvScreen">
+          <video class="screen-video" id="screenVideo" src="2025-07-04 23-46-37.mp4" autoplay muted loop playsinline></video>
+          <img src="anomaly.png" alt="" class="screen-logo-overlay" id="screenLogo">
+          <div class="screen-crt"></div>
           <div class="scanlines"></div>
-          <div class="screen-content" id="screenContent">
-            <img src="anomaly.png" alt="" class="screen-logo">
-            <div class="screen-ch">CH 01</div>
-            <h2 class="screen-title">Anomaly Realms</h2>
-            <p class="screen-desc">Minecraft-inspired RPG with real-time combat, crafting, and endless exploration.</p>
-            <div class="screen-links">
-              <a href="support/anomaly.html" class="screen-btn">📥 Download &amp; Play</a>
-              <a href="support/anomaly.html" class="screen-btn alt">💖 Support</a>
-            </div>
-          </div>
         </div>
         <div class="tv-panel">
           <div class="tv-slot" id="tvSlot"><span>VCR</span></div>
@@ -69,6 +62,11 @@
             <div class="cart-label">ROBONK</div>
             <div class="cart-ch">CH 03</div>
           </div>
+          <div class="cartridge cart-random" onclick="insertRandom()" tabindex="0">
+            <div class="cart-art random-art">🎲</div>
+            <div class="cart-label">RANDOM</div>
+            <div class="cart-ch">SURPRISE ME</div>
+          </div>
           <div class="cartridge" data-game="marble" onclick="insertCartridge(this)" tabindex="0">
             <img src="marble.png" alt="Marble Game" class="cart-art">
             <div class="cart-label">MARBLE GAME</div>
@@ -80,6 +78,22 @@
     </div>
 
     <p class="room-hint">💡 Click a cartridge to insert it into the TV</p>
+
+    <!-- Game info panel (below the table) -->
+    <div class="info-panel" id="infoPanel">
+      <div class="info-head">
+        <img src="anomaly.png" alt="" class="info-logo" id="infoLogo">
+        <div>
+          <div class="info-ch" id="infoCh">CH 01</div>
+          <h3 class="info-title" id="infoTitle">Anomaly Realms</h3>
+        </div>
+      </div>
+      <p class="info-desc" id="infoDesc">Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.</p>
+      <div class="screen-links" id="infoLinks">
+        <a href="support/anomaly.html" class="screen-btn">📥 Download &amp; Play</a>
+        <a href="support/anomaly.html" class="screen-btn alt">💖 Support</a>
+      </div>
+    </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -101,6 +115,7 @@
     const CHANNELS = {
       anomaly: {
         ch: "CH 01", title: "Anomaly Realms", art: "anomaly.png",
+        video: "2025-07-04 23-46-37.mp4",
         desc: "Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.",
         links: [
           { href: "support/anomaly.html", label: "📥 Download & Play", cls: "" },
@@ -109,20 +124,63 @@
       },
       fallen: {
         ch: "CH 02", title: "Fallen Reborn", art: "fallen.png",
+        video: "2025-07-03 12-27-45.mp4",
         desc: "A dark fantasy world where fallen heroes rise again. Immersive storytelling meets strategic gameplay in this epic adventure.",
         links: [{ href: "support/fallen.html", label: "🔔 Get Notified", cls: "" }]
       },
       robonk: {
         ch: "CH 03", title: "Robonk", art: "robonk.png",
+        video: "",
         desc: "Chaotic multiplayer mayhem with robots. WIP — stay tuned for playtests and updates.",
         links: [{ href: "support/robonk.html", label: "🔔 Get Notified", cls: "" }]
       },
       marble: {
         ch: "CH 04", title: "Marble Game", art: "marble.png",
+        video: "",
         desc: "Precision platforming meets beautiful marble physics. Navigate marble runs and collect gems in this relaxing yet challenging experience.",
         links: [{ href: "support/marble.html", label: "🔔 Get Notified", cls: "" }]
       }
     };
+
+    let currentGame = "anomaly";
+
+    function tuneTo(game, key) {
+      currentGame = key;
+      const screen = document.getElementById('tvScreen');
+      screen.classList.add('changing');
+
+      const video = document.getElementById('screenVideo');
+      if (game.video) {
+        video.style.display = '';
+        video.src = encodeURI(game.video);
+        video.load();
+        video.play().catch(() => {});
+      } else {
+        video.style.display = 'none';
+      }
+      document.getElementById('screenLogo').src = game.art;
+
+      document.getElementById('infoLogo').src = game.art;
+      document.getElementById('infoCh').textContent = game.ch;
+      document.getElementById('infoTitle').textContent = game.title;
+      document.getElementById('infoDesc').textContent = game.desc;
+      document.getElementById('infoLinks').innerHTML =
+        game.links.map(l => '<a href="' + l.href + '" class="screen-btn ' + l.cls + '">' + l.label + '</a>').join('');
+
+      const panel = document.getElementById('infoPanel');
+      panel.classList.remove('pop');
+      void panel.offsetWidth;
+      panel.classList.add('pop');
+
+      setTimeout(() => screen.classList.remove('changing'), 250);
+    }
+
+    function insertRandom() {
+      const keys = Object.keys(CHANNELS).filter(k => k !== currentGame);
+      const key = keys[Math.floor(Math.random() * keys.length)];
+      const cart = document.querySelector('.cartridge[data-game="' + key + '"]');
+      if (cart) insertCartridge(cart);
+    }
 
     function insertCartridge(cart) {
       if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
@@ -155,20 +213,7 @@
         slot.classList.add('loading');
         setTimeout(() => slot.classList.remove('loading'), 600);
 
-        const game = CHANNELS[cart.dataset.game];
-        const screen = document.getElementById('tvScreen');
-        screen.classList.add('changing');
-        setTimeout(() => {
-          document.getElementById('screenContent').innerHTML =
-            '<img src="' + game.art + '" alt="" class="screen-logo">' +
-            '<div class="screen-ch">' + game.ch + '</div>' +
-            '<h2 class="screen-title">' + game.title + '</h2>' +
-            '<p class="screen-desc">' + game.desc + '</p>' +
-            '<div class="screen-links">' +
-            game.links.map(l => '<a href="' + l.href + '" class="screen-btn ' + l.cls + '">' + l.label + '</a>').join('') +
-            '</div>';
-          screen.classList.remove('changing');
-        }, 250);
+        tuneTo(CHANNELS[cart.dataset.game], cart.dataset.game);
       }, 750);
     }
 

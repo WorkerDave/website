@@ -2,133 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Marble Game - Support & Donations</title>
+  <title>Marble Game - Support & Updates</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2b3c);
-      color: #f1f1f1;
-      text-align: center;
-      padding: 30px;
-    }
-    nav {
-      margin-bottom: 20px;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-    nav li {
-      position: relative;
-    }
-    nav a {
-      color: #4da3ff;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
-      display: block;
-      padding: 5px 10px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #2f2f40;
-      min-width: 200px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      border: 1px solid #4da3ff;
-      border-radius: 8px;
-      z-index: 1;
-      top: 100%;
-      left: 0;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .dropdown-content a {
-      margin: 0;
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(77, 163, 255, 0.2);
-    }
-    .dropdown-content a:last-child {
-      border-bottom: none;
-    }
-    .dropdown-content a:hover {
-      background: rgba(77, 163, 255, 0.1);
-    }
-    h1 {
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 30px;
-      color: #cccccc;
-    }
-    .tier, .download {
-      background: #2f2f40;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 500px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-    .tier h2, .download h2 {
-      margin-top: 0;
-      color: #ffffff;
-    }
-    .price {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #4da3ff;
-    }
-    .donate-btn, .download-btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 20px;
-      background: #0070ba;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .donate-btn:hover, .download-btn:hover {
-      background: #005c94;
-    }
-    .logo {
-      width: 160px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
+<body class="theme-marble">
   <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li class="dropdown">
-        <a href="#">Games ▼</a>
-        <div class="dropdown-content">
-          <a href="anomaly.html">Anomaly Realms</a>
-          <a href="fallen.html">Fallen Reborn</a>
-          <a href="robonk.html">Robonk</a>
-          <a href="marble.html">Marble Game</a>
-        </div>
-      </li>
-    </ul>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Anomalous<span>Games</span></a>
+      <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="anomaly.html">Anomaly Realms</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- Logo -->
-  <img src="../marble.png" alt="Marble Game Logo" class="logo">
+  <!-- Support Page Content -->
+  <section class="support-page">
+    <div class="support-header">
+      <img src="../marble.png" alt="Marble Game Logo" class="card-logo">
+      <h1><span class="grad">Marble Game</span> 🔜</h1>
+      <p>Precision platforming meets beautiful marble physics. Coming soon!</p>
+    </div>
+
+    <div class="support-divider"></div>
+
+    <!-- Coming Soon Notice -->
+    <div class="tier-card" style="background: linear-gradient(135deg, rgba(79, 172, 254, 0.15), rgba(0, 242, 254, 0.15)); border-color: rgba(79, 172, 254, 0.3);">
+      <h3 class="tier-name">🔜 Coming Soon</h3>
+      <p>Get ready for a relaxing marble adventure! Sign up to get notified when Marble Game launches!</p>
+    </div>
+
+    <div class="support-divider"></div>
+
+    <!-- Get Notified -->
+    <h2 class="support-section-title">🔔 Get Notified</h2>
+    <div class="support-secondary">
+      <a href="https://discord.gg/your-discord-link" class="card-btn outline">💬 Join Discord for Updates</a>
+      <a href="../index.html" class="card-btn outline">← Back to Home</a>
+    </div>
+
+    <div class="support-divider"></div>
+
+    <!-- Support Development -->
+    <p>Want to support development? Consider donating to help us create more games faster!</p>
+    <a href="https://www.paypal.com/paypalme/WorkerDave" target="_blank" class="btn btn-primary" style="margin-top: 20px;">💖 Support WorkerDave</a>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

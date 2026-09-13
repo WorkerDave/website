@@ -2,359 +2,185 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Support & Donations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2b3c);
-      color: #f1f1f1;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-    }
-    .hero {
-      margin-bottom: 40px;
-    }
-    .hero h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #4da3ff;
-    }
-    .hero p {
-      font-size: 1.2em;
-      color: #cccccc;
-      margin-bottom: 20px;
-    }
-    nav {
-      margin-bottom: 20px;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-    nav li {
-      position: relative;
-    }
-    nav a {
-      color: #4da3ff;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
-      display: block;
-      padding: 5px 10px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #2f2f40;
-      min-width: 200px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      border: 1px solid #4da3ff;
-      border-radius: 8px;
-      z-index: 1;
-      top: 100%;
-      left: 0;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .dropdown-content a {
-      margin: 0;
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(77, 163, 255, 0.2);
-    }
-    .dropdown-content a:last-child {
-      border-bottom: none;
-    }
-    .dropdown-content a:hover {
-      background: rgba(77, 163, 255, 0.1);
-    }
-    h1 {
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 20px;
-      color: #cccccc;
-    }
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .game-card {
-      background: linear-gradient(145deg, #2f2f40, #3a3a4f);
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      border: 1px solid rgba(77, 163, 255, 0.3);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .game-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #4da3ff, #00ff88);
-    }
-    .game-card.anomaly::before {
-      background: linear-gradient(90deg, #4da3ff, #00ff88);
-    }
-    .game-card.fallen::before {
-      background: linear-gradient(90deg, #764ba2, #f093fb);
-    }
-    .game-card.robonk::before {
-      background: linear-gradient(90deg, #FFFF00, #f5576c);
-    }
-    .game-card.marble::before {
-      background: linear-gradient(90deg, #4facfe, #00f2fe);
-    }
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(77, 163, 255, 0.3);
-    }
-    .game-card.anomaly:hover {
-      box-shadow: 0 12px 40px rgba(77, 163, 255, 0.3);
-    }
-    .game-card.fallen:hover {
-      box-shadow: 0 12px 40px rgba(118, 75, 162, 0.3);
-    }
-    .game-card.robonk:hover {
-      box-shadow: 0 12px 40px rgba(255, 255, 0, 0.3);
-    }
-    .game-card.marble:hover {
-      box-shadow: 0 12px 40px rgba(79, 172, 254, 0.3);
-    }
-    .game-card h2 {
-      margin-top: 0;
-      color: #ffffff;
-      font-size: 1.4em;
-      margin-bottom: 15px;
-    }
-    .game-card .logo {
-      width: 120px;
-      height: auto;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .download-section {
-      margin: 15px 0;
-      padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .discord-section {
-      margin: 15px 0;
-    }
-    .download-section h3, .discord-section h3, .wiki-section h3, .support-section h3 {
-      margin: 0 0 10px 0;
-      font-size: 1.1em;
-      color: #4da3ff;
-    }
-    .wiki-section {
-      margin: 15px 0;
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .wiki-section p {
-      margin: 0 0 15px 0;
-      font-size: 0.9em;
-      color: #aaaaaa;
-    }
-    .support-section {
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .support-section p {
-      margin: 0 0 15px 0;
-      font-size: 0.9em;
-      color: #aaaaaa;
-    }
-    .price {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #4da3ff;
-    }
-    .donate-btn, .download-btn {
-      display: inline-block;
-      padding: 10px 18px;
-      background: linear-gradient(45deg, #0070ba, #0056b3);
-      color: white;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.9em;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 15px rgba(0, 112, 186, 0.3);
-    }
-    .donate-btn:hover, .download-btn:hover {
-      background: linear-gradient(45deg, #005c94, #004080);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 112, 186, 0.4);
-    }
-    .logo {
-      width: 160px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-  </style>
+  <title>Anomalous Games - WorkerDave & nekoT</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
   <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li class="dropdown">
-        <a href="#">Games ▼</a>
-        <div class="dropdown-content">
-          <a href="support/anomaly.html">Anomaly Realms</a>
-          <a href="support/fallen.html">Fallen Reborn</a>
-          <a href="support/robonk.html">Robonk</a>
-          <a href="support/marble.html">Marble Game</a>
-        </div>
-      </li>
-      <li class="dropdown">
-        <a href="#">Developers ▼</a>
-        <div class="dropdown-content">
-          <a href="#WorkerDave">WorkerDave</a>
-          <a href="#nekoT">nekoT</a>
-        </div>
-      </li>
-    </ul>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Anomalous<span>Games</span></a>
+      <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="support/anomaly.html">Anomaly Realms</a></li>
+        <li><a href="support/donate.html">Donate</a></li>
+        <li><a href="#developers">Developers</a></li>
+      </ul>
+    </div>
   </nav>
 
   <!-- Hero Section -->
-  <div class="hero">
-    <h1>Anomalous Games</h1>
-  </div>
+  <section class="hero">
+    <div class="hero-badge">Independent Game Development Team</div>
+    <h1><span class="grad">Welcome to Anomalous Games</span></h1>
+    <p>A two-person studio led by WorkerDave & nekoT — download Anomaly Realms, explore upcoming titles, and support our development!</p>
+    <div class="hero-buttons">
+      <a href="#games" class="btn btn-primary">🎮 View Games</a>
+      <a href="support/anomaly.html" class="btn btn-secondary">💖 Support Development</a>
+    </div>
+  </section>
 
-  <!-- Games Grid -->
-  <div class="games-grid">
-    
-    <!-- Anomaly Realms Card -->
-    <div class="game-card anomaly">
-      <img src="anomaly.png" alt="Anomaly Realms Logo" class="logo">
-      <h2>Anomaly Realms</h2>
-      <div class="download-section">
-        <h3>📥 Download Game</h3>
-        <div class="action-buttons">
-          <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">Download ZIP</a>
-        </div>
-      </div>
-      <div class="discord-section">
-        <h3>💬 Join Community</h3>
-        <div class="action-buttons">
-          <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
-        </div>
-      </div>
-      <div class="wiki-section">
-        <h3>📚 Wiki</h3>
-        <p>Learn more about Anomaly Realms!</p>
-        <a class="download-btn" href="#">View Wiki</a>
-      </div>
-      <div class="support-section">
-        <h3>💖 Support Development</h3>
-        <p>Help keep Anomaly growing!</p>
-        <a class="download-btn" href="https://workerdave.github.io/website/support/anomaly.html">View Support Options</a>
-      </div>
+  <!-- Games Section -->
+  <section class="games-section" id="games">
+    <div class="section-header">
+      <h2>Our Games</h2>
+      <p>Explore our collection of indie games — from released titles to works in progress</p>
     </div>
 
-    <!-- Fallen Reborn Card -->
-    <div class="game-card fallen">
-      <img src="fallen.png" alt="Fallen Reborn Logo" class="logo">
-      <h2>Fallen Reborn</h2>
-      <div class="download-section">
-        <h3>📥 Download Game</h3>
-        <div class="action-buttons">
-          <p style="color: #888; font-size: 0.9em; margin: 0;">Coming Soon</p>
+    <div class="games-grid">
+
+      <!-- Anomaly Realms Card -->
+      <div class="game-card anomaly">
+        <div class="card-content">
+          <img src="anomaly.png" alt="Anomaly Realms Logo" class="card-logo">
+          <h2 class="card-title">Anomaly Realms</h2>
+          <p class="card-description">Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.</p>
+          <span class="card-status status-available">✅ Available Now</span>
+          <div class="card-actions">
+            <a href="support/anomaly.html" class="card-btn primary">📥 Download & Play</a>
+            <a href="https://discord.gg/your-discord-link" class="card-btn outline">💬 Join Discord</a>
+            <a href="support/anomaly.html" class="card-btn outline small">💖 Support</a>
+          </div>
         </div>
       </div>
-      <div class="discord-section">
-        <h3>💬 Join Community</h3>
-        <div class="action-buttons">
-          <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
+
+      <!-- Fallen Reborn Card -->
+      <div class="game-card fallen">
+        <div class="card-content">
+          <img src="fallen.png" alt="Fallen Reborn Logo" class="card-logo">
+          <h2 class="card-title">Fallen Reborn</h2>
+          <p class="card-description">A dark fantasy world where fallen heroes rise again. Immersive storytelling meets strategic gameplay in this epic adventure.</p>
+          <span class="card-status status-coming">🔜 Coming Soon</span>
+          <div class="card-actions">
+            <a href="support/fallen.html" class="card-btn outline">🔔 Get Notified</a>
+            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
+          </div>
         </div>
       </div>
-      <div class="support-section">
-        <h3>💖 Support Development</h3>
-        <p>Help keep Fallen Reborn growing!</p>
-        <a class="download-btn" href="https://workerdave.github.io/website/support/fallen.html">View Support Options</a>
+
+      <!-- Robonk Card -->
+      <div class="game-card robonk">
+        <div class="card-content">
+          <img src="robonk.png" alt="Robonk Logo" class="card-logo">
+          <h2 class="card-title">Robonk</h2>
+          <p class="card-description">Chaotic multiplayer mayhem with robots, explosions, and unpredictable fun. Battle your friends in this wild arena shooter.</p>
+          <span class="card-status status-coming">🔜 Coming Soon</span>
+          <div class="card-actions">
+            <a href="support/robonk.html" class="card-btn outline">🔔 Get Notified</a>
+            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
+          </div>
+        </div>
       </div>
+
+      <!-- Marble Game Card -->
+      <div class="game-card marble">
+        <div class="card-content">
+          <img src="marble.png" alt="Marble Game Logo" class="card-logo">
+          <h2 class="card-title">Marble Game</h2>
+          <p class="card-description">Precision platforming meets beautiful marble physics. Navigate stunning marble runs and collect gems in this relaxing yet challenging experience.</p>
+          <span class="card-status status-coming">🔜 Coming Soon</span>
+          <div class="card-actions">
+            <a href="support/marble.html" class="card-btn outline">🔔 Get Notified</a>
+            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Developers Section -->
+  <section class="features" id="developers">
+    <div class="section-header" style="margin-bottom: 40px;">
+      <h2>The Team</h2>
+      <p>The leads behind Anomalous Games</p>
     </div>
 
-    <!-- Robonk Card -->
-    <div class="game-card robonk">
-      <img src="robonk.png" alt="Robonk Logo" class="logo">
-      <h2>Robonk</h2>
-      <div class="download-section">
-        <h3>🎮 Play Game</h3>
-        <div class="action-buttons">
-          <p style="color: #888; font-size: 0.9em; margin: 0;">Coming Soon</p>
-        </div>
+    <div class="dev-grid">
+      <div class="dev-card workerdave">
+        <div class="dev-avatar">WD</div>
+        <h3 class="dev-name">WorkerDave</h3>
+        <p class="dev-role">Co-Owner · Developer</p>
+        <p class="dev-bio">Co-owner of Anomalous Games and developer of Anomaly Realms.</p>
       </div>
-      <div class="discord-section">
-        <h3>💬 Join Community</h3>
-        <div class="action-buttons">
-          <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
-        </div>
-      </div>
-      <div class="support-section">
-        <h3>💖 Support Development</h3>
-        <p>Help keep Robonk growing!</p>
-        <a class="download-btn" href="https://workerdave.github.io/website/support/robonk.html">View Support Options</a>
+      <div class="dev-card nekot">
+        <div class="dev-avatar">nT</div>
+        <h3 class="dev-name">nekoT</h3>
+        <p class="dev-role">Co-Owner · Developer & Designer</p>
+        <p class="dev-bio">Co-owner of Anomalous Games, working as both a developer and designer.</p>
       </div>
     </div>
+  </section>
 
-    <!-- Marble Game Card -->
-    <div class="game-card marble">
-      <img src="marble.png" alt="Marble Game Logo" class="logo">
-      <h2>Marble Game</h2>
-      <div class="download-section">
-        <h3>🎮 Play Game</h3>
-        <div class="action-buttons">
-          <p style="color: #888; font-size: 0.9em; margin: 0;">Coming Soon</p>
-        </div>
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features-container">
+      <div class="feature">
+        <div class="feature-icon">🎮</div>
+        <h3>Playable Games</h3>
+        <p>Download and play Anomaly Realms right now. More games coming soon!</p>
       </div>
-      <div class="discord-section">
-        <h3>💬 Join Community</h3>
-        <div class="action-buttons">
-          <a class="download-btn" href="https://discord.gg/your-discord-link">Join Discord</a>
-        </div>
+      <div class="feature">
+        <div class="feature-icon">💬</div>
+        <h3>Community</h3>
+        <p>Join our Discord community to chat, get updates, and connect with other players.</p>
       </div>
-      <div class="support-section">
-        <h3>💖 Support Development</h3>
-        <p>Help keep Marble Game growing!</p>
-        <a class="download-btn" href="https://workerdave.github.io/website/support/marble.html">View Support Options</a>
+      <div class="feature">
+        <div class="feature-icon">💖</div>
+        <h3>Support Us</h3>
+        <p>Support development through PayPal donations and unlock exclusive rewards.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📚</div>
+        <h3>Wiki & Guides</h3>
+        <p>Learn tips, tricks, and detailed information about our games.</p>
       </div>
     </div>
+  </section>
 
-  </div>
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>Love Our Games?</h2>
+    <p>Every donation helps us create more content and bring new games to life faster.</p>
+    <a href="support/anomaly.html" class="btn btn-primary">💖 Support Anomaly Realms</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-social">
+      <a href="https://discord.gg/your-discord-link" title="Discord">💬</a>
+      <a href="https://github.com/WorkerDave" title="GitHub">🐙</a>
+      <a href="https://paypal.me/WorkerDave" title="PayPal">💳</a>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="support/anomaly.html">Anomaly Realms</a>
+      <a href="support/fallen.html">Fallen Reborn</a>
+      <a href="support/robonk.html">Robonk</a>
+      <a href="support/marble.html">Marble Game</a>
+    </div>
+    <p>&copy; 2025 Anomalous Games — WorkerDave & nekoT. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

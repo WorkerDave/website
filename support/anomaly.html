@@ -2,204 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Support & Donations</title>
+  <title>Anomaly Realms - Support & Donations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2b3c);
-      color: #f1f1f1;
-      text-align: center;
-      padding: 30px;
-    }
-    nav {
-      margin-bottom: 20px;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-    nav li {
-      position: relative;
-    }
-    nav a {
-      color: #4da3ff;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
-      display: block;
-      padding: 5px 10px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background: #2f2f40;
-      min-width: 200px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      border: 1px solid #4da3ff;
-      border-radius: 8px;
-      z-index: 1;
-      top: 100%;
-      left: 0;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .dropdown-content a {
-      margin: 0;
-      padding: 10px 15px;
-      border-bottom: 1px solid rgba(77, 163, 255, 0.2);
-    }
-    .dropdown-content a:last-child {
-      border-bottom: none;
-    }
-    .dropdown-content a:hover {
-      background: rgba(77, 163, 255, 0.1);
-    }
-    h1 {
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 30px;
-      color: #cccccc;
-    }
-    .tier, .download {
-      background: #2f2f40;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 500px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-    .tier h2, .download h2 {
-      margin-top: 0;
-      color: #ffffff;
-    }
-    .price {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #4da3ff;
-    }
-    .donate-btn, .download-btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 20px;
-      background: #0070ba;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .donate-btn:hover, .download-btn:hover {
-      background: #005c94;
-    }
-    .logo {
-      width: 160px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li class="dropdown">
-        <a href="#">Games ▼</a>
-        <div class="dropdown-content">
-          <a href="anomaly.html">Anomaly Realms</a>
-          <a href="fallen.html">Fallen Reborn</a>
-          <a href="robonk.html">Robonk</a>
-          <a href="marble.html">Marble Game</a>
-        </div>
-      </li>
-    </ul>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Anomalous<span>Games</span></a>
+      <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="anomaly.html" class="active">Anomaly Realms</a></li>
+        <li><a href="donate.html">Donate</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- Logo -->
-  <img src="../anomaly.png" alt="Anomaly Realms Logo" class="logo">
+  <!-- Support Page Content -->
+  <section class="support-page">
+    <div class="support-header">
+      <img src="../anomaly.png" alt="Anomaly Realms Logo" class="card-logo">
+      <h1><span class="grad">Support Anomaly Realms</span> 💖</h1>
+      <p>Choose a tier below to support the game and unlock exclusive rewards!</p>
+    </div>
 
-  <!-- Download Section -->
-  <div class="download">
-    <h2>Download Anomaly Realms</h2>
-    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar">📥 Download RAR</a>
-    <a class="download-btn" href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip">📥 Download ZIP</a>
-  </div>
+    <!-- Downloads Section -->
+    <h2 class="support-section-title">📥 Download Game</h2>
+    <div class="support-secondary">
+      <a href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.rar" class="card-btn primary">📥 Download RAR</a>
+      <a href="https://github.com/WorkerDave/WorkerDave.github.io/raw/main/Anomaly.zip" class="card-btn primary">📥 Download ZIP</a>
+    </div>
 
-  <h1>Support Anomaly Realms 💖</h1>
-  <p>Choose a tier below to support the game and unlock rewards!</p>
+    <div class="support-divider"></div>
 
-  <!-- Premium Battlepass -->
-  <div class="tier">
-    <h2>Premium Battlepass</h2>
-    <p class="price">$8</p>
-    <p>Access to Premium Battlepass Quests</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave/8" 
-       target="_blank">Donate via PayPal</a>
-  </div>
+    <!-- Donation Tiers -->
+    <h2 class="support-section-title">💝 Donation Tiers</h2>
 
-  <!-- Donor 1 -->
-  <div class="tier">
-    <h2>Donor 1</h2>
-    <p class="price">$10</p>
-    <p>10% lb, /dsize, /glow<br>Party Size: 4<br>600 Gold</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave/10" 
-       target="_blank">Donate via PayPal</a>
-  </div>
+    <!-- Premium Battlepass -->
+    <div class="tier-card">
+      <h3 class="tier-name">Premium Battlepass</h3>
+      <p class="tier-price">$8</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>Access to Premium Battlepass Quests</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave/8" target="_blank" class="tier-btn paypal">Donate via PayPal</a>
+    </div>
 
-  <!-- Donor 2 -->
-  <div class="tier">
-    <h2>Donor 2</h2>
-    <p class="price">$25</p>
-    <p>25% lb, /dmax<br>Party Size: 5<br>1500 Gold</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave/25" 
-       target="_blank">Donate via PayPal</a>
-  </div>
+    <!-- Donor 1 -->
+    <div class="tier-card">
+      <h3 class="tier-name">Donor 1</h3>
+      <p class="tier-price">$10</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>10% loadout bonus</span></li>
+          <li><span>/dsize command</span></li>
+          <li><span>/glow command</span></li>
+          <li><span>Party Size: 4</span></li>
+          <li><span>600 Gold</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave/10" target="_blank" class="tier-btn paypal">Donate via PayPal</a>
+    </div>
 
-  <!-- Donor 3 -->
-  <div class="tier">
-    <h2>Donor 3</h2>
-    <p class="price">$50</p>
-    <p>50% lb<br>2 Reskin Parts  (gives random skin to item forged with)<br>Custom pet sprite (must say in payment notes or contact me)<br>Party Size: 6<br>3500 Gold</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave/50" 
-       target="_blank">Donate via PayPal</a>
-  </div>
+    <!-- Donor 2 -->
+    <div class="tier-card">
+      <h3 class="tier-name">Donor 2</h3>
+      <p class="tier-price">$25</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>25% loadout bonus</span></li>
+          <li><span>/dmax command</span></li>
+          <li><span>Party Size: 5</span></li>
+          <li><span>1500 Gold</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave/25" target="_blank" class="tier-btn paypal">Donate via PayPal</a>
+    </div>
 
-  <!-- Donor 4 -->
-  <div class="tier">
-    <h2>Donor 4</h2>
-    <p class="price">$75</p>
-    <p>75% lb, /dgive, /dspawn (vault only), /dgod (vault only), /legendary<br>
-    Party Size: 7<br>5000 Gold (Trading Disabled)</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave/75" 
-       target="_blank">Donate via PayPal</a>
-  </div>
+    <!-- Donor 3 -->
+    <div class="tier-card">
+      <h3 class="tier-name">Donor 3</h3>
+      <p class="tier-price">$50</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>50% loadout bonus</span></li>
+          <li><span>2 Reskin Parts (gives random skin to item forged with)</span></li>
+          <li><span>Custom pet sprite (must say in payment notes or contact me)</span></li>
+          <li><span>Party Size: 6</span></li>
+          <li><span>3500 Gold</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave/50" target="_blank" class="tier-btn paypal">Donate via PayPal</a>
+    </div>
 
-  <!-- Gold Option -->
-  <div class="tier">
-    <h2>Gold Purchase</h2>
-    <p class="price">$1 = 100 Gold</p>
-    <p>You can buy as much as you want!</p>
-    <a class="donate-btn" 
-       href="https://www.paypal.com/paypalme/WorkerDave" 
-       target="_blank">Choose Your Amount</a>
-  </div>
+    <!-- Donor 4 -->
+    <div class="tier-card">
+      <h3 class="tier-name">Donor 4</h3>
+      <p class="tier-price">$75</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>75% loadout bonus</span></li>
+          <li><span>/dgive command</span></li>
+          <li><span>/dspawn command (vault only)</span></li>
+          <li><span>/dgod command (vault only)</span></li>
+          <li><span>/legendary command</span></li>
+          <li><span>Party Size: 7</span></li>
+          <li><span>5000 Gold (Trading Disabled)</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave/75" target="_blank" class="tier-btn paypal">Donate via PayPal</a>
+    </div>
+
+    <!-- Gold Purchase -->
+    <div class="tier-card">
+      <h3 class="tier-name">Gold Purchase</h3>
+      <p class="tier-price">$1 = 100 Gold</p>
+      <div class="tier-perks">
+        <ul>
+          <li><span>You can buy as much as you want!</span></li>
+          <li><span>Perfect for topping up your gold reserves</span></li>
+        </ul>
+      </div>
+      <a href="https://www.paypal.com/paypalme/WorkerDave" target="_blank" class="tier-btn paypal">Choose Your Amount</a>
+    </div>
+
+    <div class="support-divider"></div>
+
+    <!-- Quick Links -->
+    <h2 class="support-section-title">🔗 Quick Links</h2>
+    <div class="support-secondary">
+      <a href="../index.html">← Back to Home</a>
+      <a href="https://discord.gg/your-discord-link">💬 Join Discord Community</a>
+      <a href="donate.html" class="primary">💖 Donate Without Perks</a>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>

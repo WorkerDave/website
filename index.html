@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Anomalous Games - WorkerDave & nekoT</title>
+  <title>Anomalous Games — The Room</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="room.css">
 </head>
-<body>
+<body class="room-body">
 
   <!-- Navigation -->
   <nav class="nav">
@@ -15,120 +16,83 @@
       <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="support/anomaly.html">Anomaly Realms</a></li>
         <li><a href="support/donate.html">Donate</a></li>
         <li><a href="developers.html">Developers</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-badge">Independent Game Development Team</div>
-    <h1><span class="grad">Welcome to Anomalous Games</span></h1>
-    <p>A two-person studio led by WorkerDave & nekoT — download Anomaly Realms, explore upcoming titles, and support our development!</p>
-    <div class="hero-buttons">
-      <a href="#games" class="btn btn-primary">🎮 View Games</a>
-      <a href="support/anomaly.html" class="btn btn-secondary">💖 Support Development</a>
-    </div>
-  </section>
+  <!-- The Room -->
+  <section class="room">
+    <div class="floor-perspective"></div>
+    <div class="baseboard"></div>
 
-  <!-- Games Section -->
-  <section class="games-section" id="games">
-    <div class="section-header">
-      <h2>Our Games</h2>
-      <p>Explore our collection of games — from released titles to works in progress</p>
-    </div>
-
-    <div class="games-grid">
-
-      <!-- Anomaly Realms Card -->
-      <div class="game-card anomaly">
-        <div class="card-content">
-          <img src="anomaly.png" alt="Anomaly Realms Logo" class="card-logo">
-          <h2 class="card-title">Anomaly Realms</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-available">✅ Available Now</span>
-          <div class="card-actions">
-            <a href="support/anomaly.html" class="card-btn primary">📥 Download & Play</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline">💬 Join Discord</a>
-            <a href="support/anomaly.html" class="card-btn outline small">💖 Support</a>
+    <!-- TV setup -->
+    <div class="tv-set">
+      <div class="tv">
+        <div class="tv-screen" id="tvScreen">
+          <video class="screen-video" id="screenVideo" src="2025-07-04 23-46-37.mp4" autoplay muted loop playsinline></video>
+          <img src="anomaly.png" alt="" class="screen-logo-overlay" id="screenLogo">
+          <div class="screen-crt"></div>
+          <div class="scanlines"></div>
+        </div>
+        <div class="tv-panel">
+          <div class="tv-slot" id="tvSlot">
+            <div class="slot-mouth"></div>
+            <div class="slot-feed"><div class="feed-card" id="feedCard"></div></div>
+            <div class="slot-door"></div>
+            <span>VCR</span>
+          </div>
+          <div class="tv-knobs"><span></span><span></span></div>
+          <div class="tv-brand">ANOMALOUS&nbsp;TV</div>
+        </div>
+        <div class="tv-legs"><span></span><span></span></div>
+      </div>
+      <!-- tv table with cartridges -->
+      <div class="tv-table">
+        <div class="table-top">
+          <div class="cartridge" data-game="anomaly" onclick="insertCartridge(this)" tabindex="0">
+            <img src="anomaly.png" alt="Anomaly Realms" class="cart-art">
+            <div class="cart-label">ANOMALY REALMS</div>
+            <div class="cart-ch">CH 01</div>
+          </div>
+          <div class="cartridge" data-game="fallen" onclick="insertCartridge(this)" tabindex="0">
+            <img src="fallen.png" alt="Fallen Reborn" class="cart-art">
+            <div class="cart-label">FALLEN REBORN</div>
+            <div class="cart-ch">CH 02</div>
+          </div>
+          <div class="cartridge" data-game="robonk" onclick="insertCartridge(this)" tabindex="0">
+            <img src="robonk.png" alt="Robonk" class="cart-art">
+            <div class="cart-label">ROBONK</div>
+            <div class="cart-ch">CH 03</div>
+          </div>
+          <div class="cartridge" data-game="marble" onclick="insertCartridge(this)" tabindex="0">
+            <img src="marble.png" alt="Marble Game" class="cart-art">
+            <div class="cart-label">MARBLE GAME</div>
+            <div class="cart-ch">CH 04</div>
           </div>
         </div>
-      </div>
-
-      <!-- Fallen Reborn Card -->
-      <div class="game-card fallen">
-        <div class="card-content">
-          <img src="fallen.png" alt="Fallen Reborn Logo" class="card-logo">
-          <h2 class="card-title">Fallen Reborn</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/fallen.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Robonk Card -->
-      <div class="game-card robonk">
-        <div class="card-content">
-          <img src="robonk.png" alt="Robonk Logo" class="card-logo">
-          <h2 class="card-title">Robonk</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/robonk.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Marble Game Card -->
-      <div class="game-card marble">
-        <div class="card-content">
-          <img src="marble.png" alt="Marble Game Logo" class="card-logo">
-          <h2 class="card-title">Marble Game</h2>
-          <p class="card-description">.</p>
-          <span class="card-status status-coming">🔜 Coming Soon</span>
-          <div class="card-actions">
-            <a href="support/marble.html" class="card-btn outline">🔔 Get Notified</a>
-            <a href="https://discord.gg/your-discord-link" class="card-btn outline small">💬 Join Discord</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="features">
-    <div class="features-container">
-      <div class="feature">
-        <div class="feature-icon">🎮</div>
-        <h3>Playable Games</h3>
-        <p>Download and play Anomaly Realms right now. More games coming soon!</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💬</div>
-        <h3>Community</h3>
-        <p>Join our Discord community to chat, get updates, and connect with other players.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💖</div>
-        <h3>Support Us</h3>
-        <p>Support development through PayPal donations and unlock exclusive rewards.</p>
+        <div class="table-legs"><span></span><span></span></div>
       </div>
     </div>
-  </section>
 
-  <!-- CTA Section -->
-  <section class="cta">
-    <h2>Love Our Games?</h2>
-    <p>Every donation helps us create more content and bring new games to life faster.</p>
-    <a href="support/anomaly.html" class="btn btn-primary">💖 Support Anomaly Realms</a>
-  </section>
+    <p class="room-hint">💡 Click a cartridge to insert it into the TV</p>
+
+    <!-- Game info panel (below the table) -->
+    <div class="info-panel" id="infoPanel">
+      <div class="info-head">
+        <img src="anomaly.png" alt="" class="info-logo" id="infoLogo">
+        <div>
+          <div class="info-ch" id="infoCh">CH 01</div>
+          <h3 class="info-title" id="infoTitle">Anomaly Realms</h3>
+        </div>
+      </div>
+      <p class="info-desc" id="infoDesc">Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.</p>
+      <div class="screen-links" id="infoLinks">
+        <a href="support/anomaly.html" class="screen-btn">📥 Download &amp; Play</a>
+        <a href="support/anomaly.html" class="screen-btn alt">💖 Support</a>
+      </div>
+    </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -143,15 +107,174 @@
       <a href="support/donate.html">Donate</a>
       <a href="developers.html">Developers</a>
     </div>
-    <p>&copy; 2025 Anomalous Games — WorkerDave & nekoT. All rights reserved.</p>
+    <p>&copy; 2025 Anomalous Games — WorkerDave &amp; nekoT. All rights reserved.</p>
   </footer>
 
   <script>
+    const CHANNELS = {
+      anomaly: {
+        ch: "CH 01", title: "Anomaly Realms", art: "anomaly.png",
+        video: "2025-07-04 23-46-37.mp4",
+        desc: "Minecraft-inspired RPG with real-time combat, crafting, and endless exploration. Forge weapons, battle bosses, and discover a living world.",
+        links: [
+          { href: "support/anomaly.html", label: "📥 Download & Play", cls: "" },
+          { href: "support/anomaly.html", label: "💖 Support", cls: "alt" }
+        ]
+      },
+      fallen: {
+        ch: "CH 02", title: "Fallen Reborn", art: "fallen.png",
+        video: "2025-07-03 12-27-45.mp4",
+        desc: "A dark fantasy world where fallen heroes rise again. Immersive storytelling meets strategic gameplay in this epic adventure.",
+        links: [{ href: "support/fallen.html", label: "🔔 Get Notified", cls: "" }]
+      },
+      robonk: {
+        ch: "CH 03", title: "Robonk", art: "robonk.png",
+        video: "",
+        desc: "Chaotic multiplayer mayhem with robots. WIP — stay tuned for playtests and updates.",
+        links: [{ href: "support/robonk.html", label: "🔔 Get Notified", cls: "" }]
+      },
+      marble: {
+        ch: "CH 04", title: "Marble Game", art: "marble.png",
+        video: "",
+        desc: "Precision platforming meets beautiful marble physics. Navigate marble runs and collect gems in this relaxing yet challenging experience.",
+        links: [{ href: "support/marble.html", label: "🔔 Get Notified", cls: "" }]
+      }
+    };
+
+    let currentGame = "anomaly";
+
+    function tuneTo(game, key) {
+      currentGame = key;
+      const screen = document.getElementById('tvScreen');
+      screen.classList.add('changing');
+
+      const video = document.getElementById('screenVideo');
+      if (game.video) {
+        video.style.display = '';
+        video.src = encodeURI(game.video);
+        video.load();
+        video.play().catch(() => {});
+      } else {
+        video.style.display = 'none';
+      }
+      document.getElementById('screenLogo').src = game.art;
+
+      document.getElementById('infoLogo').src = game.art;
+      document.getElementById('infoCh').textContent = game.ch;
+      document.getElementById('infoTitle').textContent = game.title;
+      document.getElementById('infoDesc').textContent = game.desc;
+      document.getElementById('infoLinks').innerHTML =
+        game.links.map(l => '<a href="' + l.href + '" class="screen-btn ' + l.cls + '">' + l.label + '</a>').join('');
+
+      const panel = document.getElementById('infoPanel');
+      panel.classList.remove('pop');
+      void panel.offsetWidth;
+      panel.classList.add('pop');
+
+      setTimeout(() => screen.classList.remove('changing'), 250);
+    }
+
+    function insertCartridge(cart) {
+      if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
+      document.querySelectorAll('.cartridge.inserted').forEach(c => c.classList.remove('inserted'));
+      cart.classList.add('inserting');
+
+      // clone the cartridge and fly it into the actual VCR slot
+      const slot = document.getElementById('tvSlot');
+      const cRect = cart.getBoundingClientRect();
+      const sRect = slot.getBoundingClientRect();
+      const ghost = cart.cloneNode(true);
+      ghost.className = 'cartridge cart-ghost';
+      ghost.style.left = cRect.left + 'px';
+      ghost.style.top = cRect.top + 'px';
+      ghost.style.width = cRect.width + 'px';
+      document.body.appendChild(ghost);
+
+      // physics-y multi-phase animation: lift -> arc -> tilt & slide into slot
+      void ghost.offsetWidth;
+      const dx = (sRect.left + sRect.width / 2) - (cRect.left + cRect.width / 2);
+      const dy = (sRect.top + sRect.height / 2) - (cRect.top + cRect.height / 2);
+      const fit = Math.min((sRect.width * 0.95) / cRect.width, 1.6);
+      const cardH = cRect.height * fit;
+      // hover position: card's bottom edge sits right on the slot's opening
+      const hoverY = (sRect.top - cardH / 2) - (cRect.top + cRect.height / 2);
+      const anim = ghost.animate([
+        // 1. get picked up off the table, growing
+        { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0, easing: 'cubic-bezier(.2,.8,.3,1)' },
+        // 2. arc up and toward the TV, oversized
+        { transform: `translate(${dx * 0.3}px, ${dy * 0.75 - 70}px) rotate(-9deg) scale(${fit * 0.85})`, opacity: 1, offset: 0.4, easing: 'cubic-bezier(.4,0,.8,.4)' },
+        // 3. gravity drop toward the slot, beginning to tilt flat
+        { transform: `translate(${dx * 0.92}px, ${dy * 0.95}px) rotate(4deg) perspective(700px) rotateX(45deg) scale(${fit})`, opacity: 1, offset: 0.72, easing: 'cubic-bezier(.5,0,.9,.5)' },
+        // 4. tilt to a believable angle — face AND 3D edge visible — and hover just above the slot
+        { transform: `translate(${dx}px, ${dy - 26}px) perspective(700px) rotateX(55deg) scale(${fit})`, opacity: 1, offset: 0.86, easing: 'ease-in' },
+        // 5. hover over the slot mouth like a hand holding a floppy
+        { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 1 }
+      ], { duration: 900, fill: 'forwards' });
+
+      // TV shakes a little on impact
+      setTimeout(() => {
+        document.querySelector('.tv').animate([
+          { transform: 'translate(0,0) rotate(0deg)' },
+          { transform: 'translate(1px,2px) rotate(0.3deg)' },
+          { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
+          { transform: 'translate(1px,0) rotate(0.15deg)' },
+          { transform: 'translate(0,0) rotate(0deg)' }
+        ], { duration: 220 });
+      }, 880);
+
+      // door flips open while the card is still approaching
+      setTimeout(() => slot.classList.add('open'), 650);
+
+      // PHASE 2 — the card drops flat onto the mouth and slides in, slab edge
+      // catching the light as it's swallowed
+      setTimeout(() => {
+        // drop: card tips down onto the slot opening
+        ghost.animate([
+          { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 0, easing: 'ease-in' },
+          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(86deg) scale(${fit})`, opacity: 0.9, offset: 0.6 },
+          // slide the last bit into the mouth and vanish
+          { transform: `translate(${dx + 24}px, ${dy + 4}px) perspective(700px) rotateX(90deg) scale(${fit * 0.9})`, opacity: 0, offset: 1 }
+        ], { duration: 420, fill: 'forwards' });
+
+        // edge-on slab slides through the slot as the card disappears into it
+        const feed = document.getElementById('feedCard');
+        feed.animate([
+          { transform: 'translateX(-120%)', opacity: 1, offset: 0, easing: 'cubic-bezier(.3,0,.7,.6)' },
+          { transform: 'translateX(-30%)', opacity: 1, offset: 0.45 },
+          { transform: 'translateX(40%) scaleX(0.75)', opacity: 1, offset: 0.75, easing: 'ease-in' },
+          { transform: 'translateX(95%) scaleX(0.3)', opacity: 0, offset: 1 }
+        ], { duration: 650, fill: 'forwards', delay: 180 });
+
+        // TV shudders as the card is pulled in
+        document.querySelector('.tv').animate([
+          { transform: 'translate(0,0) rotate(0deg)' },
+          { transform: 'translate(1px,2px) rotate(0.3deg)' },
+          { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
+          { transform: 'translate(1px,0) rotate(0.15deg)' },
+          { transform: 'translate(0,0) rotate(0deg)' }
+        ], { duration: 220, delay: 450 });
+      }, 950);
+
+      // PHASE 3 — door closes, channel changes
+      setTimeout(() => {
+        ghost.remove();
+        slot.classList.remove('open');
+        slot.classList.add('loading');
+        setTimeout(() => slot.classList.remove('loading'), 600);
+
+        cart.classList.remove('inserting');
+        cart.classList.add('inserted');
+
+        tuneTo(CHANNELS[cart.dataset.game], cart.dataset.game);
+      }, 1750);
+    }
+
     function toggleMenu() {
-      const navLinks = document.getElementById('navLinks');
-      navLinks.classList.toggle('open');
+      document.getElementById('navLinks').classList.toggle('open');
     }
   </script>
 
+  <div class="room-vignette"></div>
+  </section>
 </body>
 </html>

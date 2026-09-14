@@ -174,99 +174,188 @@
       setTimeout(() => screen.classList.remove('changing'), 250);
     }
 
-    function insertCartridge(cart) {
-      if (cart.classList.contains('inserting') || cart.classList.contains('inserted')) return;
-      document.querySelectorAll('.cartridge.inserted').forEach(c => c.classList.remove('inserted'));
-      cart.classList.add('inserting');
+    /* ================================================================
+       VCR TAPE STATE MACHINE
+       Stages: IDLE -> EJECT (if a tape is loaded) -> TRAVEL -> INSERT
+               -> SEATED. Every stage is awaited, so eject and insert
+               can never overlap. Durations come from the CSS custom
+               properties on :root in room.css.
+       ================================================================ */
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
-      // clone the cartridge and fly it into the actual VCR slot
+    // read tunable timings from room.css so JS logic never hardcodes them
+    function vcrTiming() {
+      const s = getComputedStyle(document.getElementById('tvSlot'));
+      const ms = (name) => parseFloat(s.getPropertyValue(name)) || 0;
+      return {
+        travel: ms('--insert-travel-duration'),
+        snap:   ms('--insert-snap-duration'),
+        eject:  ms('--eject-duration'),
+        kick:   ms('--eject-kick-duration'),
+        catchEase: s.getPropertyValue('--vcr-catch-ease').trim() || 'ease-out',
+        easeIn: s.getPropertyValue('--vcr-ease-in').trim() || 'ease-in'
+      };
+    }
+
+    // short camera-shake on the TV (transform-only, GPU friendly)
+    function tvShake(delay = 0) {
+      document.querySelector('.tv').animate([
+        { transform: 'translate(0,0) rotate(0deg)' },
+        { transform: 'translate(1px,2px) rotate(0.3deg)' },
+        { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
+        { transform: 'translate(1px,0) rotate(0.15deg)' },
+        { transform: 'translate(0,0) rotate(0deg)' }
+      ], { duration: 220, delay });
+    }
+
+    // dark page-level layer pinned over the slot (document coordinates,
+    // scroll-proof) so the tape is occluded as it feeds in
+    function showOccluder(sRect) {
+      const occ = document.createElement('div');
+      occ.className = 'slot-occluder';
+      occ.id = 'slotOccluder';
+      occ.style.left = (sRect.left + window.scrollX) + 'px';
+      occ.style.top = (sRect.top + window.scrollY) + 'px';
+      occ.style.width = sRect.width + 'px';
+      occ.style.height = sRect.height + 'px';
+      document.body.appendChild(occ);
+      return occ;
+    }
+    const hideOccluder = () => document.getElementById('slotOccluder')?.remove();
+
+    let vcrBusy = false;   // guard: no overlapping animations
+    let loadedKey = null;  // which tape (if any) is currently seated
+
+    function insertCartridge(cart) {
+      if (vcrBusy) return;
+      const key = cart.dataset.game;
+      if (key === loadedKey) return; // same tape already playing
+      vcrBusy = true;
+      (async () => {
+        // ---- EJECT: clear the slot AND un-dim the previous tape ----
+        if (loadedKey) {
+          document.querySelector(`.cartridge[data-game="${loadedKey}"]`)?.classList.remove('inserted');
+          await ejectLoadedTape();
+        }
+        // ---- TRAVEL -> INSERT -> SEATED ----
+        await insertTape(cart, key);
+        vcrBusy = false;
+      })();
+    }
+
+    /* ---------- EJECT stage ---------- */
+    async function ejectLoadedTape() {
+      const t = vcrTiming();
       const slot = document.getElementById('tvSlot');
+      const feed = document.getElementById('feedCard');
+      slot.classList.remove('loaded');
+      slot.classList.add('ejecting', 'open');
+
+      // spring-out "pop": seated lip kicks out of the mouth, then fades away
+      feed.animate([
+        { transform: 'translateX(-72%) scaleX(0.9)', opacity: 1, offset: 0, easing: 'ease-out' },
+        { transform: 'translateX(-40%) scaleX(1)',   opacity: 1, offset: 0.35, easing: 'ease-in' },
+        { transform: 'translateX(-58%) scaleX(0.95)', opacity: 0, offset: 1 }
+      ], { duration: t.kick, fill: 'forwards' });
+
+      await wait(t.kick + 80);
+
+      // door swings shut on an empty slot
+      slot.classList.remove('ejecting', 'open');
+      await wait(Math.max(t.eject - t.kick - 80, 120));
+      feed.getAnimations().forEach(a => a.cancel());
+      feed.style.opacity = '';
+      loadedKey = null;
+    }
+
+    /* ---------- TRAVEL -> INSERT -> SEATED stages ---------- */
+    async function insertTape(cart, key) {
+      const t = vcrTiming();
+      const slot = document.getElementById('tvSlot');
+      const feed = document.getElementById('feedCard');
+
+      // ---- TRAVEL prep: clone the cartridge and fly it to the slot ----
+      cart.classList.add('inserting');
       const cRect = cart.getBoundingClientRect();
       const sRect = slot.getBoundingClientRect();
       const ghost = cart.cloneNode(true);
       ghost.className = 'cartridge cart-ghost';
-      ghost.style.left = cRect.left + 'px';
-      ghost.style.top = cRect.top + 'px';
+      // page coordinates so scrolling mid-animation can't desync it
+      ghost.style.left = (cRect.left + window.scrollX) + 'px';
+      ghost.style.top = (cRect.top + window.scrollY) + 'px';
       ghost.style.width = cRect.width + 'px';
       document.body.appendChild(ghost);
-
-      // physics-y multi-phase animation: lift -> arc -> tilt & slide into slot
       void ghost.offsetWidth;
+
       const dx = (sRect.left + sRect.width / 2) - (cRect.left + cRect.width / 2);
-      const dy = (sRect.top + sRect.height / 2) - (cRect.top + cRect.height / 2);
-      const fit = Math.min((sRect.width * 0.95) / cRect.width, 1.6);
-      const cardH = cRect.height * fit;
-      // hover position: card's bottom edge sits right on the slot's opening
-      const hoverY = (sRect.top - cardH / 2) - (cRect.top + cRect.height / 2);
-      const anim = ghost.animate([
-        // 1. get picked up off the table, growing
-        { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0, easing: 'cubic-bezier(.2,.8,.3,1)' },
-        // 2. arc up and toward the TV, oversized
-        { transform: `translate(${dx * 0.3}px, ${dy * 0.75 - 70}px) rotate(-9deg) scale(${fit * 0.85})`, opacity: 1, offset: 0.4, easing: 'cubic-bezier(.4,0,.8,.4)' },
-        // 3. gravity drop toward the slot, beginning to tilt flat
-        { transform: `translate(${dx * 0.92}px, ${dy * 0.95}px) rotate(4deg) perspective(700px) rotateX(45deg) scale(${fit})`, opacity: 1, offset: 0.72, easing: 'cubic-bezier(.5,0,.9,.5)' },
-        // 4. tilt to a believable angle — face AND 3D edge visible — and hover just above the slot
-        { transform: `translate(${dx}px, ${dy - 26}px) perspective(700px) rotateX(55deg) scale(${fit})`, opacity: 1, offset: 0.86, easing: 'ease-in' },
-        // 5. hover over the slot mouth like a hand holding a floppy
-        { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 1 }
-      ], { duration: 900, fill: 'forwards' });
+      // tape arrives scaled so its long (bottom) edge fits the slot mouth
+      const fit = Math.min((sRect.width * 0.55) / cRect.width, 1.4);
+      // landing: scaled tape's bottom edge rests EXACTLY on the slot line
+      const landY = (sRect.top - (cRect.height * fit) / 2) - (cRect.top + cRect.height / 2);
 
-      // TV shakes a little on impact
-      setTimeout(() => {
-        document.querySelector('.tv').animate([
-          { transform: 'translate(0,0) rotate(0deg)' },
-          { transform: 'translate(1px,2px) rotate(0.3deg)' },
-          { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
-          { transform: 'translate(1px,0) rotate(0.15deg)' },
-          { transform: 'translate(0,0) rotate(0deg)' }
-        ], { duration: 220 });
-      }, 880);
+      // ---- TRAVEL: lift -> arc -> land upright on the slot line ----
+      const travel = ghost.animate([
+        // picked up off the table
+        { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0, easing: 'ease-out' },
+        // arc up and toward the TV
+        { transform: `translate(${dx * 0.4}px, ${landY * 0.55 - 60}px) rotate(-6deg) scale(${(1 + fit) / 2 + 0.1})`, opacity: 1, offset: 0.4, easing: t.easeIn },
+        // arrive: upright, bottom edge resting on the slot line
+        { transform: `translate(${dx}px, ${landY}px) rotate(0deg) scale(${fit})`, opacity: 1, offset: 1 }
+      ], { duration: t.travel, fill: 'forwards' });
+      await travel.finished;
 
-      // door flips open while the card is still approaching
-      setTimeout(() => slot.classList.add('open'), 650);
+      // door flips open the moment the tape arrives
+      slot.classList.add('open');
+      tvShake(0);
+      await wait(150); // let the door swing before the feed starts
 
-      // PHASE 2 — the card drops flat onto the mouth and slides in, slab edge
-      // catching the light as it's swallowed
-      setTimeout(() => {
-        // drop: card tips down onto the slot opening
-        ghost.animate([
-          { transform: `translate(${dx}px, ${dy - 22}px) perspective(700px) rotateX(58deg) scale(${fit})`, opacity: 1, offset: 0, easing: 'ease-in' },
-          { transform: `translate(${dx}px, ${dy}px) perspective(700px) rotateX(86deg) scale(${fit})`, opacity: 0.9, offset: 0.6 },
-          // slide the last bit into the mouth and vanish
-          { transform: `translate(${dx + 24}px, ${dy + 4}px) perspective(700px) rotateX(90deg) scale(${fit * 0.9})`, opacity: 0, offset: 1 }
-        ], { duration: 420, fill: 'forwards' });
+      // ---- INSERT (real VCR feed): the ghost pivots around its bottom
+      //      edge (transform-origin in CSS), so that edge STAYS PLANTED on
+      //      the slot line through every beat. Laying flat, then receding
+      //      (translateZ) while flattening to ~88deg makes the tape visibly
+      //      collapse into the slot line — exactly how a VHS insertion
+      //      looks from the front. ----
+      const occ = showOccluder(sRect);
+      // edge-on slab feeds through the clipped .slot-feed — the part of
+      // the tape already inside the machine
+      feed.style.opacity = '1';
+      const feedAnim = feed.animate([
+        { transform: 'translateX(-120%)', opacity: 1, offset: 0, easing: t.catchEase },
+        { transform: 'translateX(30%) scaleX(0.95)', opacity: 1, offset: 0.55, easing: 'ease-in' },
+        { transform: 'translateX(60%) scaleX(0.9)', opacity: 1, offset: 1 }
+      ], { duration: t.snap + 120, fill: 'forwards' });
 
-        // edge-on slab slides through the slot as the card disappears into it
-        const feed = document.getElementById('feedCard');
-        feed.animate([
-          { transform: 'translateX(-120%)', opacity: 1, offset: 0, easing: 'cubic-bezier(.3,0,.7,.6)' },
-          { transform: 'translateX(-30%)', opacity: 1, offset: 0.45 },
-          { transform: 'translateX(40%) scaleX(0.75)', opacity: 1, offset: 0.75, easing: 'ease-in' },
-          { transform: 'translateX(95%) scaleX(0.3)', opacity: 0, offset: 1 }
-        ], { duration: 650, fill: 'forwards', delay: 180 });
+      const drop = ghost.animate([
+        // BEAT 1 — upright arrival on the slot line
+        { transform: `perspective(700px) translate(${dx}px, ${landY}px) rotateX(8deg) scale(${fit})`, opacity: 1, offset: 0, easing: t.catchEase },
+        // BEAT 2 — lays down flat onto the slot, edge staying on the line
+        { transform: `perspective(700px) translate(${dx}px, ${landY}px) rotateX(74deg) scale(${fit})`, opacity: 1, offset: 0.42, easing: t.easeIn },
+        // BEAT 3 — mechanism draws it back: recedes and flattens into the slit
+        { transform: `perspective(700px) translate(${dx}px, ${landY}px) rotateX(84deg) translateZ(-120px) scale(${fit})`, opacity: 0.9, offset: 0.75 },
+        // BEAT 4 — collapsed into the slot line, fully swallowed
+        { transform: `perspective(700px) translate(${dx}px, ${landY}px) rotateX(88deg) translateZ(-220px) scale(${fit})`, opacity: 0, offset: 1 }
+      ], { duration: t.snap, fill: 'forwards' });
+      await drop.finished;
 
-        // TV shudders as the card is pulled in
-        document.querySelector('.tv').animate([
-          { transform: 'translate(0,0) rotate(0deg)' },
-          { transform: 'translate(1px,2px) rotate(0.3deg)' },
-          { transform: 'translate(-2px,1px) rotate(-0.3deg)' },
-          { transform: 'translate(1px,0) rotate(0.15deg)' },
-          { transform: 'translate(0,0) rotate(0deg)' }
-        ], { duration: 220, delay: 450 });
-      }, 950);
+      // ---- SEATED: ghost gone; tape lip parks, LED lights, channel tunes ----
+      ghost.remove();
+      hideOccluder();
+      slot.classList.remove('open');
+      slot.classList.add('loading', 'loaded');
+      tvShake(40); // snap of the mechanism catching the tape
 
-      // PHASE 3 — door closes, channel changes
-      setTimeout(() => {
-        ghost.remove();
-        slot.classList.remove('open');
-        slot.classList.add('loading');
-        setTimeout(() => slot.classList.remove('loading'), 600);
+      await feedAnim.finished;
+      feed.getAnimations().forEach(a => a.cancel());
+      feed.style.opacity = ''; // .tv-slot.loaded .feed-card parks the lip via CSS
+      await wait(600);         // "loading" blink
+      slot.classList.remove('loading');
 
-        cart.classList.remove('inserting');
-        cart.classList.add('inserted');
+      cart.classList.remove('inserting');
+      cart.classList.add('inserted');
+      loadedKey = key;
 
-        tuneTo(CHANNELS[cart.dataset.game], cart.dataset.game);
-      }, 1750);
+      // hook into the existing TV/video-swap logic
+      tuneTo(CHANNELS[key], key);
     }
 
     function toggleMenu() {

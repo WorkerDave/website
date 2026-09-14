@@ -5,6 +5,23 @@
   min-height: 100vh;
 }
 
+/* ===== VCR / tape animation timing =====
+   Tune these without touching the animation logic in index.html.
+   Durations are read by the JS via getComputedStyle(). */
+:root {
+  /* travel: tape lifts, arcs over and hovers above the slot mouth */
+  --insert-travel-duration: 950ms;
+  /* final feed: lays flat + is drawn into the slot (4 beats) */
+  --insert-snap-duration: 620ms;
+  /* full eject: door opens, tape pops out, door closes */
+  --eject-duration: 900ms;
+  /* the quick spring-out "kick" of the tape itself, inside the eject */
+  --eject-kick-duration: 320ms;
+  /* mechanical ease with a tiny overshoot at the end (the "catch") */
+  --vcr-catch-ease: cubic-bezier(.22, 1.2, .36, 1);
+  --vcr-ease-in: cubic-bezier(.5, 0, .85, .4);
+}
+
 .room {
   position: relative;
   max-width: 1100px;
@@ -456,31 +473,70 @@
 /* ghost clone that flies from table into the VCR slot */
 .cartridge.inserting { opacity: 0.35; }
 
-/* real 3D thickness: the edge is a perpendicular face, not a flat strip */
+/* ===== 3D cassette slab =====
+   The flying ghost is a real 3D object, not a flat card:
+   - the element itself is the FRONT face (the cartridge art)
+   - ::before is the TOP face (VHS label surface), folded 90° so it lies
+     horizontal extending away from the viewer — visible when the tape
+     lays flat to feed into the slot
+   - ::after is the BOTTOM/leading thickness edge, folded down — the face
+     that meets the slot mouth
+   All three share the ghost's preserve-3d space, so the slab has true
+   thickness at every angle. transform-origin is the bottom edge so
+   rotateX pivots around the leading edge. */
 .cart-ghost {
   transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
 }
 
+/* top label face — lies flat, extending away from the viewer */
+.cart-ghost::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 100%;
+  height: 20px;
+  transform-origin: bottom center;
+  transform: rotateX(90deg);
+  border-radius: 5px 5px 0 0;
+  background:
+    linear-gradient(90deg,
+      rgba(205, 191, 232, 0.9) 0 46px,   /* printed label */
+      rgba(138, 118, 184, 0.85) 46px 120px,
+      rgba(61, 48, 84, 0.9) 120px),
+    linear-gradient(180deg, #4a3d60, #2b2436);
+  background-blend-mode: multiply;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+  backface-visibility: hidden;
+}
+
+/* leading thickness edge — the thin face that enters the slot first */
 .cart-ghost::after {
   content: "";
   position: absolute;
-  left: 3px;
-  right: 3px;
+  left: 2px;
+  right: 2px;
   top: 100%;
-  height: 16px;
+  height: 18px;
   border-radius: 0 0 6px 6px;
   transform-origin: top center;
   transform: rotateX(-88deg);
   background: linear-gradient(180deg,
-    #6a5a8e 0 3px,
-    #3d3054 3px 8px,
-    #241c30 8px 13px,
-    #100c18 13px 16px);
+    #a291cc 0 2px,          /* bright leading edge catching the light */
+    #6a5a8e 2px 5px,
+    #3d3054 5px 10px,
+    #241c30 10px 14px,
+    #100c18 14px 18px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+  backface-visibility: hidden;
 }
 
 .cartridge.cart-ghost {
-  position: fixed;
+  /* page coordinates (not fixed) so mid-animation scrolling
+     can't desync the tape from the slot */
+  position: absolute;
   z-index: 999;
   pointer-events: none;
   margin: 0;
@@ -493,12 +549,62 @@
   border-color: rgba(127, 212, 138, 0.6);
 }
 
-/* after inserting: dimmed, shows as "in the TV" */
+/* ===== SEATED state — a tape is parked in the slot ===== */
+/* LED indicator: lit while a tape is loaded */
+.tv-slot::after {
+  content: "";
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: #1c2b20;
+  box-shadow: inset 0 0 2px #000;
+  transition: background 0.3s, box-shadow 0.3s;
+  z-index: 5;
+  pointer-events: none;
+}
+.tv-slot.loaded::after {
+  background: #7fd48a;
+  box-shadow: 0 0 8px rgba(127, 212, 138, 0.9), 0 0 3px rgba(127, 212, 138, 1);
+}
+
+/* seated tape: thin VHS lip protruding from the left of the mouth,
+   label edge catching the light — parked, not animating */
+.tv-slot.loaded .feed-card {
+  opacity: 1;
+  /* mostly withdrawn: only the thin end sticks out of the mouth */
+  transform: translateX(-72%) scaleX(0.9);
+  transition: transform 0.3s var(--vcr-catch-ease);
+}
+/* while ejecting, the seated tape pops out before being removed */
+.tv-slot.ejecting .feed-card {
+  transition: none;
+}
+
+/* ===== dark occluder =====
+   The flying tape ghost is position:fixed at z-index 999, so an in-slot
+   overlay can't clip it. JS pins this body-level replica of the slot face
+   directly over the slot (z-index 1000) so the tape's leading edge visibly
+   disappears BEHIND the slot opening as it feeds in. */
+.slot-occluder {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  background: linear-gradient(180deg, #05040a, #16141d);
+  border-radius: 5px;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+
+/* after inserting: dimmed in the row — click again to eject/switch tapes */
 .cartridge.inserted {
   opacity: 0.45;
   border-color: rgba(127, 212, 138, 0.55);
   transform: scale(0.96);
-  cursor: default;
+  cursor: pointer;
 }
 
 .cartridge.inserted::after {
